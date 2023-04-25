@@ -1,10 +1,10 @@
 import logging
 
+from flask.views import MethodView
 from flask_jwt_extended import jwt_required
 from mongoengine.errors import NotUniqueError, ValidationError
 
 from .users_blp import users_blp
-from .abstract_users_view import AbstractUsersView
 
 from ...schemas.users_schemas import (
     InputCreateUserSchema,
@@ -20,7 +20,7 @@ logger = logging.getLogger('console')
 
 
 @users_blp.route('/')
-class RootUsersView(AbstractUsersView):
+class RootUsersView(MethodView):
 
     @users_blp.doc(operationId='ListUsers')
     @users_blp.response(200, schema=GetUsersListSchema, description="List of users found in the database")

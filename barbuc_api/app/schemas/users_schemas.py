@@ -73,3 +73,23 @@ class InputCreateUserSchema(Schema):
     class Meta:
         description = "Input informations need to create user."
         ordered = True
+
+
+class InputUpdateUserSchema(Schema):
+    email = fields.String(metadata={"description": "New email of the user"}, required=False)
+    password = fields.String(metadata={"description": "New password of the user"}, required=False)
+    name = fields.String(metadata={"description": "New name of the user"}, required=False)
+
+    class Meta:
+        description = "New user information"
+        ordered = True
+
+
+class InputUpdateUserSchema(Schema):
+    email = fields.String(metadata={"description": "New email of the user"}, required=False)
+    password = fields.String(metadata={"description": "New password of the user"}, required=False)
+    name = fields.String(metadata={"description": "New name of the user"}, required=False)
+
+    class Meta:
+        description = "New user information"
+        ordered = True

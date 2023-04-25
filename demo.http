@@ -8,9 +8,7 @@ Content-Type: application/json
 }
 
 ###
-@TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4MjQyNDAxNCwianRpIjoiOTNiYTEyNTctMWMzZC00MDVhLTlmMzMtYTA4MjcwNWI4ZDc3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InZpY3Rvci5jeXByaWVuQGxpbWF5cmFjLmZyIiwibmJmIjoxNjgyNDI0MDE0LCJleHAiOjE2ODI0MzEyMTR9.UbveQQKzqqSnwEikCQiMl28XDaWNuZU_yqmX6FDhj70
-
-
+@TOKEN=token
 ###
 GET http://localhost:5001/api/users
 Authorization: Bearer {{TOKEN}}
@@ -22,10 +20,25 @@ Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
-    "email": "tristan.calvet@limayrac.fr",
-    "name": "Tristan CALVET",
+    "email": "test.test@test.fr",
+    "name": "Test",
     "password": "beedemo"
 }
+
+###
+PUT http://localhost:5001/api/users/1035547759
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "email": "victor.cyprien@limayrac.fr"
+}
+
+
+###
+DELETE http://localhost:5001/api/users/644277296
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
 
 
 ###

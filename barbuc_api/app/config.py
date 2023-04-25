@@ -15,15 +15,15 @@ class Config:
 
         # FLASK JWT
         self.FLASK_JWT = env.str('FLASK_JWT', None)
-        self.JWT_ACCESS_TOKEN_EXPIRES = env.int('JWT_ACCESS_TOKEN_EXPIRES', 7200)
+        self.JWT_ACCESS_TOKEN_EXPIRES = env.int('JWT_ACCESS_TOKEN_EXPIRES', None)
 
         # MONGODB
-        self.MONGODB_URI = env.str('MONGODB_URI', 'mongodb://localhost:27017')
-        self.MONGODB_DATABASE = env.str('MONGODB_DATABASE', 'barbuc-api')
+        self.MONGODB_URI = env.str('MONGODB_URI', None)
+        self.MONGODB_DATABASE = env.str('MONGODB_DATABASE', None)
         self.MONGODB_CONNECT = False
 
         # PASSWORD CUSTOM SALT
-        self.SECURITY_PASSWORD_SALT = env.str('SECURITY_PASSWORD_SALT', "672B2BB59D2E432E8F3FB10E23B8AECC")
+        self.SECURITY_PASSWORD_SALT = env.str('SECURITY_PASSWORD_SALT', None)
 
         # OPENAPI
         self.API_TITLE = self.SERVICE_NAME
