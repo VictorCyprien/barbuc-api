@@ -25,6 +25,7 @@ class LogoutAuthView(MethodView):
     @auth_blp.response(201, schema=LogoutResponseSchema, description="Logout the user")
     @jwt_required()
     def post(self):
+        """Logout the user"""
         jti = get_jwt()["jti"]
         jwt_redis_blocklist = current_app.extensions['jwt_redis_blocklist']
         jwt_redis_blocklist.set(jti, "", ex=config.JWT_ACCESS_TOKEN_EXPIRES)

@@ -39,6 +39,7 @@ class RootUsersView(MethodView):
     @users_blp.response(201, schema=UserResponseSchema, description="Infos of new user")
     @jwt_required()
     def post(self, input_data: dict):
+        """Create a new user"""
         if not User.isValidEmail(input_data["email"]):
             raise BadRequest(ReasonError.INVALID_EMAIL.value)
         user = User.create(input_data=input_data)

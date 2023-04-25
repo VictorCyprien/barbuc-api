@@ -25,6 +25,7 @@ class LoginAuthView(MethodView):
     @auth_blp.arguments(LoginParamsSchema)
     @auth_blp.response(201, schema=LoginResponseSchema, description="Log the user")
     def post(self, user_login: dict):
+        """Login the user"""
         logger.debug(f"Authenticate user with email: {user_login.get('email')}")
         email = user_login.get("email")
         password = user_login.get("password")

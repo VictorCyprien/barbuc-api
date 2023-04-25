@@ -27,6 +27,7 @@ class OneUserView(MethodView):
     @users_blp.response(200, schema=UserResponseSchema, description="Update one user")
     @jwt_required()
     def put(self, input_dict: Dict, user_id: int):
+        """Update an existing user"""
         try:
             user = User.get_by_id(id=user_id)
         except DoesNotExist:
@@ -45,6 +46,7 @@ class OneUserView(MethodView):
     @users_blp.response(200, schema=UserResponseSchema, description="Delete one user")
     @jwt_required()
     def delete(self, user_id: int):
+        """Delete an existing user"""
         try:
             user = User.get_by_id(id=user_id)
         except DoesNotExist:
