@@ -1,0 +1,35 @@
+###
+POST http://localhost:5001/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "victor.cyprien@limayrac.fr",
+    "password": "beedemo"
+}
+
+###
+@TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4MjQyNDAxNCwianRpIjoiOTNiYTEyNTctMWMzZC00MDVhLTlmMzMtYTA4MjcwNWI4ZDc3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InZpY3Rvci5jeXByaWVuQGxpbWF5cmFjLmZyIiwibmJmIjoxNjgyNDI0MDE0LCJleHAiOjE2ODI0MzEyMTR9.UbveQQKzqqSnwEikCQiMl28XDaWNuZU_yqmX6FDhj70
+
+
+###
+GET http://localhost:5001/api/users
+Authorization: Bearer {{TOKEN}}
+
+
+###
+POST http://localhost:5001/api/users
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "email": "tristan.calvet@limayrac.fr",
+    "name": "Tristan CALVET",
+    "password": "beedemo"
+}
+
+
+###
+POST http://localhost:5001/api/auth/logout
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+

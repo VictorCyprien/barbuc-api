@@ -1,0 +1,34 @@
+import logging
+
+from flask import current_app
+from flask.views import MethodView
+from flask_jwt_extended import jwt_required, get_jwt
+from mongoengine.errors import NotUniqueError, ValidationError
+
+from .auth_blp import auth_blp
+
+from ...schemas.auth_schemas import (
+    LogoutResponseSchema
+)
+
+from ...models.user import User
+from ....helpers.errors_msg_handler import ReasonError
+from ...config import config
+
+logger = logging.getLogger('console')
+
+
+@auth_blp.route('/logout')
+class LogoutAuthView(MethodView):
+    
+    @auth_blp.doc(operationId='Logout')
+    @auth_blp.response(201, schema=LogoutResponseSchema, description="Logout the user")
+    @jwt_required()
+    def post(self):
+        jti = get_jwt()["jti"]
+        jwt_redis_blocklist = current_app.extensions['jwt_redis_blocklist']
+        jwt_redis_blocklist.set(jti, "", ex=config.JWT_ACCESS_TOKEN_EXPIRES)
+
+        return {
+            "msg": "You have been logout !"
+        }
