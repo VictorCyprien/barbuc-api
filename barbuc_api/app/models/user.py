@@ -1,12 +1,19 @@
+from typing import List
+
 from mongoengine import Document, fields
+from mongoengine.errors import ValidationError
+
 from passlib.handlers.pbkdf2 import pbkdf2_sha256
 from passlib.hash import bcrypt
+
 from datetime import datetime
+
 import pytz
 import re
 import random
 
 from ..config import config
+from ...helpers.errors_msg_handler import ReasonError
 
 USER_ID_MAX_VAL = 2**31-1
 
@@ -91,6 +98,22 @@ class User(Document):
         user.update_time = datetime.now(tz=pytz.utc).replace(microsecond=0)
         return user
 
+    
+    def update(self, input_data: dict):
+        if "email" in input_data:
+            new_email = input_data["email"]
+            if self.isValidEmail(new_email):
+                self.email = new_email
+            else:
+                raise ValidationError(ReasonError.INVALID_EMAIL.value)
+        if "password" in input_data:
+            new_password = input_data["password"]
+            self.set_password(new_password)
+        if "name" in input_data:
+            new_name = input_data["name"]
+            self.name = new_name
+        self.update_time = datetime.now(tz=pytz.utc).replace(microsecond=0)
+
 
     def set_password(self, password: str):
         salt = config.SECURITY_PASSWORD_SALT.encode('utf8')
@@ -122,3 +145,18 @@ class User(Document):
         if nb_trial > 10:
             raise RuntimeError("Impossible to get new user id")
         return uid
+
+
+    @classmethod
+    def get_by_id(cls, id: int, only: List[str] = None, exclude: List[str] = None) -> "User":
+        try:
+            id = int(id)
+        except ValueError:
+            raise ValidationError('user_id should be an int')
+        _query = User.objects(user_id=id)
+        if only is not None:
+            _query = _query.only(*only)
+        if exclude is not None:
+            _query = _query.exclude(*exclude)
+        user = _query.get()
+        return user
