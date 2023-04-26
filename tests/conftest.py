@@ -1,4 +1,5 @@
 from datetime import datetime
+import mongomock
 
 from werkzeug.datastructures import Headers
 
@@ -8,15 +9,14 @@ from flask import Flask
 from flask import testing
 from flask.testing import FlaskClient
 from flask import current_app
-import jwt
+from flask_jwt_extended import create_access_token, JWTManager
 
 from unittest.mock import Mock
 import pytest
 from rich import print
 import freezegun
 
-from barbuc_api.app.models import User
-from barbuc_api.config import config
+from barbuc_api.models.user import User
 
 
 @pytest.fixture(scope='session')
@@ -28,9 +28,16 @@ def app(request) -> Flask:
     config.MONGODB_DATABASE = "test"
     config.MONGODB_CONNECT = False
 
+    config.SECURITY_PASSWORD_SALT = "123456"
+    config.FLASK_JWT = "123456"
+    config.JWT_ACCESS_TOKEN_EXPIRES = 7200
+
 
     from barbuc_api.app import create_flask_app
     _app = create_flask_app(config=config)
+    client = mongomock.MongoClient()
+    _app.config['MONGO_URI'] = client
+    jtw = JWTManager(_app)
     yield _app
 
 
@@ -53,46 +60,26 @@ def client(app: Flask) -> TestClient:
     yield client
 
 
-def _set_user_auth_headers(client: TestClient, user: User) -> FlaskClient:
-    payload = {
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
-        'iat': datetime.datetime.utcnow(),
-        'sub': user.user_id
-    }
-    token = jwt.encode(
-        payload,
-        123456,
-        algorithm='HS256'
-    )
-
-    client.global_headers = {'Authorization': f'Bearer {token.decode()}'}
-    return client
-
-
 def _raz_auth_headers(client: TestClient):
     client.global_headers = {}
 
 
 @pytest.fixture(scope='function')
 def client_victor(client: TestClient, victor: User) -> FlaskClient:
-    _set_user_auth_headers(client, victor)
     yield client
     _raz_auth_headers(client)
 
 
 @pytest.fixture(scope='function')
 def client_tristan(client: TestClient, tristan: User) -> FlaskClient:
-    _set_user_auth_headers(client, tristan)
     yield client
     _raz_auth_headers(client)
 
 
 @pytest.fixture(scope='function')
 def client_member(client: TestClient, member: User) -> FlaskClient:
-    _set_user_auth_headers(client, member)
     yield client
     _raz_auth_headers(client)
-
 
 
 @pytest.fixture(scope='function')
@@ -141,3 +128,11 @@ def member(app) -> User:
     yield user
     user.delete()
 
+
+@pytest.fixture(scope='function')
+def mock_jtw():
+    from flask_jwt_extended import jwt_required
+    _original = jwt_required
+    jwt_required = Mock()
+    yield jwt_required
+    jwt_required = _original
