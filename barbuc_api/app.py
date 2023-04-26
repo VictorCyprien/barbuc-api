@@ -23,7 +23,7 @@ from mongoengine import errors
 from healthcheck import HealthCheck
 
 from .config import Config
-from ..helpers.check_mongodb import get_mongodb_status
+from .helpers.check_mongodb import get_mongodb_status
 from .models.user import User
 
 

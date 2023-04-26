@@ -1,7 +1,7 @@
 """ Main app
 """
 
-from barbuc_api.app.main import app
+from barbuc_api.main import app
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000)

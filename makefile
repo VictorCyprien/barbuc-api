@@ -37,4 +37,4 @@ tests:
 
 
 testsx:
-	pytest -x -vv --doctest-modules --ignore-glob=./identity_server/main.py --log-level=DEBUG ./identity_server ./tests
+	pytest -x -vv --doctest-modules --ignore-glob=./barbuc_api/app/main.py --log-level=DEBUG ./barbuc_api ./tests
