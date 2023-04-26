@@ -6,6 +6,7 @@ from mongoengine.errors import NotUniqueError, ValidationError
 
 from .users_blp import users_blp
 
+from ...schemas.communs_schemas import PagingError
 from ...schemas.users_schemas import (
     InputCreateUserSchema,
     UserResponseSchema,
@@ -23,6 +24,7 @@ logger = logging.getLogger('console')
 class RootUsersView(MethodView):
 
     @users_blp.doc(operationId='ListUsers')
+    @users_blp.response(401, schema=PagingError, description="Unautorized")
     @users_blp.response(200, schema=GetUsersListSchema, description="List of users found in the database")
     @jwt_required()
     def get(self):
@@ -36,6 +38,8 @@ class RootUsersView(MethodView):
 
     @users_blp.doc(operationId='CreateUser')
     @users_blp.arguments(InputCreateUserSchema)
+    @users_blp.response(400, schema=PagingError, description="BadRequest")
+    @users_blp.response(401, schema=PagingError, description="Unautorized")
     @users_blp.response(201, schema=UserResponseSchema, description="Infos of new user")
     @jwt_required()
     def post(self, input_data: dict):

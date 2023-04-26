@@ -7,6 +7,7 @@ from mongoengine.errors import NotUniqueError, ValidationError
 
 from .auth_blp import auth_blp
 
+from ...schemas.communs_schemas import PagingError
 from ...schemas.auth_schemas import (
     LogoutResponseSchema
 )
@@ -22,6 +23,7 @@ logger = logging.getLogger('console')
 class LogoutAuthView(MethodView):
     
     @auth_blp.doc(operationId='Logout')
+    @auth_blp.response(401, schema=PagingError, description="Not logged")
     @auth_blp.response(201, schema=LogoutResponseSchema, description="Logout the user")
     @jwt_required()
     def post(self):
