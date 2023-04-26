@@ -89,6 +89,11 @@ class InputUpdateUserSchema(Schema):
     email = fields.String(metadata={"description": "New email of the user"}, required=False)
     password = fields.String(metadata={"description": "New password of the user"}, required=False)
     name = fields.String(metadata={"description": "New name of the user"}, required=False)
+    scopes = fields.List(
+        fields.String,
+        metadata={"description": "New scopes of the user"},
+        required=False
+    )
 
     class Meta:
         description = "New user information"

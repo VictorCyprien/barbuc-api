@@ -47,6 +47,12 @@ class User(Document):
     """ Last time login of the User
     """
 
+    scopes = fields.ListField(fields.StringField(), default=None)
+    #Note: default None is important to ensure that scopes are not serialized when exclude from model
+    """ Permissions of the User
+    """
+
+
     @property
     def creation_time(self):
         return self._creation_time
@@ -90,6 +96,7 @@ class User(Document):
         user.user_id = input_data['user_id']
         user.email = email
         user.name = name
+        user.scopes = ["user:member"]
 
         if password is not None:
             user.set_password(password)  
@@ -112,6 +119,9 @@ class User(Document):
         if "name" in input_data:
             new_name = input_data["name"]
             self.name = new_name
+        if "scopes" in input_data:
+            new_scopes = input_data["scopes"]
+            self.scopes = new_scopes
         self.update_time = datetime.now(tz=pytz.utc).replace(microsecond=0)
 
 

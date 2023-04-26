@@ -3,8 +3,8 @@ POST http://localhost:5001/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "victor.cyprien@limayrac.fr",
-    "password": "beedemo"
+    "email": "admin.admin@admin.fr",
+    "password": "123456Az!"
 }
 
 ###
@@ -26,17 +26,17 @@ Authorization: Bearer {{TOKEN}}
 }
 
 ###
-PUT http://localhost:5001/api/users/1035547759
+PUT http://localhost:5001/api/users/943602075
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
-    "email": "victor.cyprien@limayrac.fr"
+    "email": "test2.test2@test2.fr"
 }
 
 
 ###
-DELETE http://localhost:5001/api/users/644277296
+DELETE http://localhost:5001/api/users/943602075
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
