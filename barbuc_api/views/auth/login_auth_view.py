@@ -14,7 +14,7 @@ from ...schemas.auth_schemas import (
 )
 
 from ...models.user import User
-from ....helpers.errors_msg_handler import Unauthorized, ReasonError
+from ...helpers.errors_msg_handler import Unauthorized, ReasonError
 
 
 logger = logging.getLogger('console')

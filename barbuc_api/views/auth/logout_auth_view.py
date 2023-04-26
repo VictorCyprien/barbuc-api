@@ -13,7 +13,7 @@ from ...schemas.auth_schemas import (
 )
 
 from ...models.user import User
-from ....helpers.errors_msg_handler import ReasonError
+from ...helpers.errors_msg_handler import ReasonError
 from ...config import config
 
 logger = logging.getLogger('console')

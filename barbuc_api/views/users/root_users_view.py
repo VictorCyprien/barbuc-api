@@ -14,7 +14,7 @@ from ...schemas.users_schemas import (
 )
 
 from ...models.user import User
-from ....helpers.errors_msg_handler import BadRequest, ReasonError
+from ...helpers.errors_msg_handler import BadRequest, ReasonError
 
 from .abstract_user_view import AbstractUsersView
 
