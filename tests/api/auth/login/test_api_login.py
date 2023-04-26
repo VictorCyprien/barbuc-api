@@ -8,7 +8,7 @@ from unittest.mock import ANY
 from barbuc_api.models.user import User
 
 
-def test_login_user(client_victor: Flask, victor: User):
+def test_login_user(app, client_victor: Flask, victor: User):
 
     data = {
         "email": victor.email,
@@ -24,7 +24,7 @@ def test_login_user(client_victor: Flask, victor: User):
     }
 
 
-def test_login_user_wrong_credentials(client_victor: Flask, victor: User):
+def test_login_user_wrong_credentials(app, client_victor: Flask, victor: User):
 
     data = {
         "email": victor.email,
@@ -41,7 +41,7 @@ def test_login_user_wrong_credentials(client_victor: Flask, victor: User):
     }
 
 
-def test_login_user_invalid_email(client_victor: Flask, victor: User):
+def test_login_user_invalid_email(app, client_victor: Flask, victor: User):
 
     data = {
         "email": "123",
@@ -58,7 +58,7 @@ def test_login_user_invalid_email(client_victor: Flask, victor: User):
     }
 
 
-def test_login_user_not_found(client_victor: Flask, victor: User):
+def test_login_user_not_found(app, client_victor: Flask, victor: User):
 
     data = {
         "email": "test.test@test.fr",
