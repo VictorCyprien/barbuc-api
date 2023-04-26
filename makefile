@@ -25,16 +25,18 @@ cleaninstall: requirements clean_pip
 	@echo
 	@echo "---- Install packages from requirements.txt ----"
 	@pip install -r requirements.txt
-	@echo
+	@pip freeze
+	@echo "---- Install packages from requirements.dev.txt ----"
+	@pip install -r requirements.dev.txt
 	@pip freeze
 	@echo
 	@echo "---- Install packages from setup ----"
 	@$(shell echo ${PYTHON_ROCKSDB_FLAGS}) pip install -e ./
 
 tests:
-	pytest --cov=app --cov-config=.coveragerc --cov-report=html:htmlcov --cov-report xml:cov.xml --cov-report=term \
-		-vv --doctest-modules --ignore-glob=./app/main.py --log-level=DEBUG --junitxml=report.xml ./app ./tests
+	pytest --cov=barbuc_api --cov-config=.coveragerc --cov-report=html:htmlcov --cov-report xml:cov.xml --cov-report=term \
+		-vv --doctest-modules --ignore-glob=./main.py --log-level=DEBUG --junitxml=report.xml ./ ./tests
 
 
 testsx:
-	pytest -x -vv --doctest-modules --ignore-glob=./barbuc_api/app/main.py --log-level=DEBUG ./barbuc_api ./tests
+	pytest -x -vv --doctest-modules --ignore-glob=./barbuc_api/main.py --log-level=DEBUG ./barbuc_api ./tests
