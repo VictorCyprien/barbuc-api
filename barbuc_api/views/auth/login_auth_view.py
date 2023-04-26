@@ -33,12 +33,14 @@ class LoginAuthView(MethodView):
         email = user_login.get("email")
         password = user_login.get("password")
   
-        if User.isValidEmail(email):
-            try:
-                user: User = User.objects.get(email=email)
-            except DoesNotExist as exc:
-                logger.debug(f"Unauthenticated user: {exc}")
-                raise Unauthorized(ReasonError.BAD_CREDENTIALS.value)
+        if not User.isValidEmail(email):
+            raise Unauthorized(ReasonError.BAD_CREDENTIALS.value)
+
+        try:
+            user: User = User.objects.get(email=email)
+        except DoesNotExist as exc:
+            logger.debug(f"Unauthenticated user: {exc}")
+            raise Unauthorized(ReasonError.BAD_CREDENTIALS.value)
             
         if not user.check_password(password=password):
             raise Unauthorized(ReasonError.BAD_CREDENTIALS.value)
