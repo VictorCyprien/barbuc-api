@@ -43,7 +43,7 @@ class LoginAuthView(MethodView):
         if not user.check_password(password=password):
             raise Unauthorized(ReasonError.BAD_CREDENTIALS.value)
         
-        token = create_access_token(identity=email)
+        token = create_access_token(identity=user.user_id)
         return {
             "msg": "Logged",
             "token": token
