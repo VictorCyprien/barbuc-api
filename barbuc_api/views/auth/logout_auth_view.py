@@ -3,7 +3,6 @@ import logging
 from flask import current_app
 from flask.views import MethodView
 from flask_jwt_extended import jwt_required, get_jwt
-from mongoengine.errors import NotUniqueError, ValidationError
 
 from .auth_blp import auth_blp
 

@@ -1,11 +1,7 @@
-from bson import ObjectId
-from passlib.handlers.pbkdf2 import pbkdf2_sha256
-
-from marshmallow import Schema, fields, pre_load, pre_dump
-from marshmallow import validates_schema, ValidationError
+from marshmallow import Schema, fields
 from marshmallow.validate import Range
 
-from ..models.user import User, USER_ID_MAX_VAL
+from ..models.user import USER_ID_MAX_VAL
 
 class UserSchema(Schema):
     user_id = fields.Integer(

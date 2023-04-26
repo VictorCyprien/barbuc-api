@@ -6,7 +6,6 @@ from mongoengine.errors import DoesNotExist
 
 from .auth_blp import auth_blp
 
-
 from ...schemas.communs_schemas import PagingError
 from ...schemas.auth_schemas import (
     LoginParamsSchema,

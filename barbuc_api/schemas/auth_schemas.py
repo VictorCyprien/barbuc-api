@@ -1,9 +1,4 @@
-from bson import ObjectId
-from passlib.handlers.pbkdf2 import pbkdf2_sha256
-
-from marshmallow import Schema, fields, pre_load, pre_dump
-from marshmallow import validates_schema, ValidationError
-from marshmallow.validate import Range
+from marshmallow import Schema, fields
 
 class LoginParamsSchema(Schema):
     email = fields.String(metadata={"description": "Email of the login"}, required=True)

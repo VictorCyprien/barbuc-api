@@ -1,11 +1,5 @@
 from flask.app import Flask
-import freezegun
-from barbuc_api.helpers.errors_msg_handler import ReasonError
 from rich import print
-
-from flask_jwt_extended import create_access_token
-
-from unittest.mock import ANY
 
 from barbuc_api.models.user import User
 

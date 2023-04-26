@@ -1,10 +1,10 @@
 import logging
 
-from flask.views import MethodView
 from flask_jwt_extended import jwt_required
 from mongoengine.errors import NotUniqueError, ValidationError
 
 from .users_blp import users_blp
+from .abstract_user_view import AbstractUsersView
 
 from ...schemas.communs_schemas import PagingError
 from ...schemas.users_schemas import (
@@ -16,7 +16,6 @@ from ...schemas.users_schemas import (
 from ...models.user import User
 from ...helpers.errors_msg_handler import BadRequest, ReasonError
 
-from .abstract_user_view import AbstractUsersView
 
 logger = logging.getLogger('console')
 

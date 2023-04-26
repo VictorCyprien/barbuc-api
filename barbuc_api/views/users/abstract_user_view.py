@@ -1,12 +1,7 @@
-from typing import List, Set, Optional
+from typing import List
 import logging
 
-from mongoengine.errors import DoesNotExist, ValidationError
-from mongoengine.queryset.visitor import Q
-
 from flask.views import MethodView
-
-from ...models.user import User
 
 logger = logging.getLogger('console')
 

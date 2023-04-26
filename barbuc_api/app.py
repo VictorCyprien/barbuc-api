@@ -4,15 +4,11 @@ import logging.config
 import click
 from environs import Env
 
-from urllib.parse import urlparse
-
 from flask import Flask, request, jsonify
 from flask_compress import Compress
 from flask_cors import CORS
-from flask_mongoengine import MongoEngine
 from flask_smorest import Api
 from flask.cli import AppGroup
-from flask_wtf.csrf import CSRFProtect
 
 from flask_jwt_extended import JWTManager
 

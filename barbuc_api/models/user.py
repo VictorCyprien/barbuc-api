@@ -13,7 +13,6 @@ import re
 import random
 
 from ..config import config
-from ..helpers.errors_msg_handler import ReasonError
 
 USER_ID_MAX_VAL = 2**31-1
 
