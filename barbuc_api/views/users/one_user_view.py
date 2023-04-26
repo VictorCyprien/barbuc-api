@@ -40,6 +40,9 @@ class OneUserView(AbstractUsersView):
             user_id=user_id
         ):
             raise NotFound(f"User #{user_id} not found !")
+        
+        if input_dict.get("email", None) is not None and not User.isValidEmail(input_dict["email"]):
+            raise BadRequest(ReasonError.INVALID_EMAIL.value)
 
         user = User.get_by_id(id=user_id)
         user.update(input_dict)

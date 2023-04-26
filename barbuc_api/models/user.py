@@ -109,10 +109,7 @@ class User(Document):
     def update(self, input_data: dict):
         if "email" in input_data:
             new_email = input_data["email"]
-            if self.isValidEmail(new_email):
-                self.email = new_email
-            else:
-                raise ValidationError(ReasonError.INVALID_EMAIL.value)
+            self.email = new_email
         if "password" in input_data:
             new_password = input_data["password"]
             self.set_password(new_password)
