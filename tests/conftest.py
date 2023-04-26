@@ -1,9 +1,9 @@
 from datetime import datetime
-import mongomock
 
 from werkzeug.datastructures import Headers
 
 from mongoengine.connection import disconnect
+import mongomock
 
 from flask import Flask
 from flask import testing
@@ -32,12 +32,9 @@ def app(request) -> Flask:
     config.FLASK_JWT = "123456"
     config.JWT_ACCESS_TOKEN_EXPIRES = 7200
 
-
     from barbuc_api.app import create_flask_app
     _app = create_flask_app(config=config)
-    client = mongomock.MongoClient()
-    _app.config['MONGO_URI'] = client
-    jtw = JWTManager(_app)
+    JWTManager(_app)
     yield _app
 
 
@@ -129,10 +126,12 @@ def member(app) -> User:
     user.delete()
 
 
-@pytest.fixture(scope='function')
-def mock_jtw():
-    from flask_jwt_extended import jwt_required
-    _original = jwt_required
-    jwt_required = Mock()
-    yield jwt_required
-    jwt_required = _original
+@pytest.fixture
+def mock_save_document():
+    from barbuc_api.models.user import User
+    from mongoengine.errors import ValidationError
+    _original = User.save
+    User.save = Mock()
+    User.save.side_effect = ValidationError
+    yield User.save
+    User.save = _original
