@@ -45,5 +45,6 @@ class LoginAuthView(MethodView):
         
         token = create_access_token(identity=email)
         return {
+            "msg": "Logged",
             "token": token
         }

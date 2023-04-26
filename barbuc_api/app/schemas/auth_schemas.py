@@ -15,6 +15,7 @@ class LoginParamsSchema(Schema):
 
 
 class LoginResponseSchema(Schema):
+    msg = fields.String(metadata={"description": "Message of login"})
     token = fields.String(metadata={"description": "Token of the user"})
 
     class Meta:
