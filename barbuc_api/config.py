@@ -7,7 +7,7 @@ class Config:
         env = Env()
 
         self.SERVICE_NAME = 'Barbuc-api'
-        self.LOGGER_LEVEL = env.str("LOGGER_LEVEL", "INFO")
+        self.LOGGER_LEVEL = env.str("LOGGER_LEVEL", "DEBUG")
 
         # FLASK
         self.FLASK_ENV = env.str('FLASK_ENV', 'dev')
@@ -19,11 +19,11 @@ class Config:
 
         # MONGODB
         self.MONGODB_URI = env.str('MONGODB_URI', "mongodb://localhost:27017")
-        self.MONGODB_DATABASE = env.str('MONGODB_DATABASE', None)
+        self.MONGODB_DATABASE = env.str('MONGODB_DATABASE', "barbuc-api")
         self.MONGODB_CONNECT = False
 
         # PASSWORD CUSTOM SALT
-        self.SECURITY_PASSWORD_SALT = env.str('SECURITY_PASSWORD_SALT', None)
+        self.SECURITY_PASSWORD_SALT = env.str('SECURITY_PASSWORD_SALT', "123456")
 
         # OPENAPI
         self.API_TITLE = self.SERVICE_NAME
