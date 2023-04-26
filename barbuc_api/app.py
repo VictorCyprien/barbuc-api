@@ -18,7 +18,7 @@ from flask_jwt_extended import JWTManager
 
 import redis
 
-from mongoengine import errors
+from mongoengine import errors, connect
 
 from healthcheck import HealthCheck
 
@@ -145,11 +145,11 @@ def create_flask_app(config: Config) -> Flask:
     app.debug = config.FLASK_ENV
 
     # Configure mongo client
-    app.mongo_client = MongoEngine(app=app)
+    mongo_engine = connect(config.MONGODB_DATABASE, host=config.MONGODB_URI)
 
     #Add healthcheck
     health = HealthCheck(app, "/healthcheck")
-    health.add_check(get_mongodb_status(app.mongo_client))
+    health.add_check(get_mongodb_status(mongo_engine))
 
     @app.route('/')
     def index():
