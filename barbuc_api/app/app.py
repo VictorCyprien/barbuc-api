@@ -24,6 +24,7 @@ from healthcheck import HealthCheck
 
 from .config import Config
 from ..helpers.check_mongodb import get_mongodb_status
+from .models.user import User
 
 
 def create_flask_app(config: Config) -> Flask:
@@ -35,6 +36,30 @@ def create_flask_app(config: Config) -> Flask:
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["JWT_SECRET_KEY"] = config.FLASK_JWT
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = config.JWT_ACCESS_TOKEN_EXPIRES
+
+    # Add CLI command for create a superadmin
+    # REQUIRED for first launch of db
+
+    user_cli = AppGroup('user')
+
+    @user_cli.command('create_superadmin')
+    @click.argument('password')
+    def create_superadmin(password: str):
+        user = User.create({
+            "user_id": 1,
+            "email": "admin.admin@admin.fr",
+            "name": "superadmin"
+        })
+        user.set_password(password)
+
+        try:
+            user.save()
+        except errors.NotUniqueError:
+            print("User already exist !", file=sys.stderr)
+
+        print("Superadmin created !", file=sys.stderr)
+
+    app.cli.add_command(user_cli)
 
     # Set token auth and redis blacklist
     jwt = JWTManager(app)
