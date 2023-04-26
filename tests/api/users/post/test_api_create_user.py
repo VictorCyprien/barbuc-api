@@ -3,6 +3,8 @@ from rich import print
 
 from unittest.mock import ANY
 
+from mongoengine.errors import ValidationError
+
 from barbuc_api.models.user import User
 
 
@@ -170,6 +172,7 @@ def test_create_user_email_already_used(client: Flask, victor: User):
     }
 
 def test_user_error_during_save(client: Flask, victor: User, mock_save_document):
+    mock_save_document.side_effect = None
     data_login = {
         "email": victor.email,
         "password": "beedemo"
@@ -184,6 +187,8 @@ def test_user_error_during_save(client: Flask, victor: User, mock_save_document)
         "password": "beedemo",
         "name": "TestUser"
     }
+
+    mock_save_document.side_effect = ValidationError
 
     res = client.post("/api/users/", json=data, headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 400
