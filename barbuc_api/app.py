@@ -31,6 +31,9 @@ def create_flask_app(config: Config) -> Flask:
     # Create the Flask App
     app = Flask(__name__)
 
+    # Set logging config
+    logging.config.dictConfig(config.logger_config)
+
     # Set config env
     app.config["WTF_CSRF_CHECK_DEFAULT"] = True
     app.config['CORS_HEADERS'] = 'Content-Type'
