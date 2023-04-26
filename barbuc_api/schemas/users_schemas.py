@@ -37,12 +37,6 @@ class UserSchema(Schema):
         metadata={"exclude_if_null": True, "description": "Last user update time"}
     )
 
-
-    @validates_schema
-    def validate_email(self, data, **kwargs):
-        if 'email' in data and not User.isValidEmail(data['email']):
-            raise ValidationError({"email": ["Invalid email format."]})
-
     class Meta:
         ordered = True
         description = "User informations."
