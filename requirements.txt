@@ -1,8 +1,8 @@
 environs
 rich
 pymongo
-mongoengine
-Flask
+mongoengine==0.26.0
+Flask==2.2.4
 flask-cors
 flask-compress
 flask_mongoengine
