@@ -49,8 +49,8 @@ def create_flask_app(config: Config) -> Flask:
             "user_id": 1,
             "email": "admin.admin@admin.fr",
             "name": "superadmin",
-            "scopes": ["user:admin"]
         })
+        user.scopes = ["user:admin"]
         user.set_password(password)
 
         try:
