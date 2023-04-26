@@ -47,6 +47,20 @@ class BadRequest(WerkzeugBadRequest):
             self.data["message"] = message
 
 
+class NotFound(WerkzeugNotFound):
+    """ NotFound error customized for default smorest error handler
+
+    >>> err = NotFound("An important message")
+    >>> err.data
+    {'message': 'An important message'}
+    """
+    def __init__(self, message: str = None) -> None:
+        super().__init__()
+        if message:
+            self.data = {}
+            self.data["message"] = message
+
+
 class ReasonError(Enum):
     NOT_AUTHENTICATED = "You must be logged in to perform this action"
     AUTHENTICATION_FAILED = "Authentication failed"
