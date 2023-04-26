@@ -18,7 +18,7 @@ class Config:
         self.JWT_ACCESS_TOKEN_EXPIRES = env.int('JWT_ACCESS_TOKEN_EXPIRES', None)
 
         # MONGODB
-        self.MONGODB_URI = env.str('MONGODB_URI', None)
+        self.MONGODB_URI = env.str('MONGODB_URI', "mongodb://localhost:27017")
         self.MONGODB_DATABASE = env.str('MONGODB_DATABASE', None)
         self.MONGODB_CONNECT = False
 
