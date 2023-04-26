@@ -48,6 +48,7 @@ class LoginAuthView(MethodView):
         
         token = create_access_token(identity=user.user_id)
         user.last_login = datetime.now(tz=pytz.utc).replace(microsecond=0)
+        user.save()
         return {
             "msg": "Logged",
             "token": token
