@@ -2,8 +2,8 @@ from typing import Dict
 import logging
 
 from flask.views import MethodView
-from flask_jwt_extended import jwt_required
-from mongoengine.errors import DoesNotExist
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from mongoengine.errors import DoesNotExist, NotUniqueError
 
 from .users_blp import users_blp
 
@@ -14,14 +14,15 @@ from ...schemas.users_schemas import (
 )
 
 from ...models.user import User
-from ....helpers.errors_msg_handler import BadRequest, ReasonError
+from ....helpers.errors_msg_handler import BadRequest, ReasonError, NotFound
 
+from .abstract_user_view import AbstractUsersView
 
 logger = logging.getLogger('console')
 
 
 @users_blp.route('/<int:user_id>')
-class OneUserView(MethodView):
+class OneUserView(AbstractUsersView):
 
     @users_blp.doc(operationId='UpdateUser')
     @users_blp.arguments(InputUpdateUserSchema)
@@ -31,13 +32,22 @@ class OneUserView(MethodView):
     @jwt_required()
     def put(self, input_dict: Dict, user_id: int):
         """Update an existing user"""
-        try:
-            user = User.get_by_id(id=user_id)
-        except DoesNotExist:
-            raise BadRequest(f"User #{user_id} not found !")
+        auth_user = User.get_by_id(get_jwt_identity())
         
+        if not self.can_read_the_user(
+            auth_user_id=auth_user.user_id, 
+            user_scopes=auth_user.scopes,
+            user_id=user_id
+        ):
+            raise NotFound(f"User #{user_id} not found !")
+
+        user = User.get_by_id(id=user_id)
         user.update(input_dict)
-        user.save()
+        
+        try:
+            user.save()
+        except NotUniqueError:
+            raise BadRequest(ReasonError.UPDATE_USER_ERROR.value)
 
         return {
             "action": "updated",
@@ -52,11 +62,16 @@ class OneUserView(MethodView):
     @jwt_required()
     def delete(self, user_id: int):
         """Delete an existing user"""
-        try:
-            user = User.get_by_id(id=user_id)
-        except DoesNotExist:
-            raise BadRequest(f"User #{user_id} not found !")
+        auth_user = User.get_by_id(get_jwt_identity())
         
+        if not self.can_read_the_user(
+            auth_user_id=auth_user.user_id, 
+            user_scopes=auth_user.scopes,
+            user_id=user_id
+        ):
+            raise NotFound(f"User #{user_id} not found !")
+
+        user = User.get_by_id(id=user_id)
         user.delete()
 
         return {

@@ -16,12 +16,13 @@ from ...schemas.users_schemas import (
 from ...models.user import User
 from ....helpers.errors_msg_handler import BadRequest, ReasonError
 
+from .abstract_user_view import AbstractUsersView
 
 logger = logging.getLogger('console')
 
 
 @users_blp.route('/')
-class RootUsersView(MethodView):
+class RootUsersView(AbstractUsersView):
 
     @users_blp.doc(operationId='ListUsers')
     @users_blp.response(401, schema=PagingError, description="Unautorized")
