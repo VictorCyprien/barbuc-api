@@ -6,6 +6,8 @@ from mongoengine.errors import DoesNotExist
 
 from .auth_blp import auth_blp
 
+
+from ...schemas.communs_schemas import PagingError
 from ...schemas.auth_schemas import (
     LoginParamsSchema,
     LoginResponseSchema
@@ -23,8 +25,10 @@ class LoginAuthView(MethodView):
     
     @auth_blp.doc(operationId='Login')
     @auth_blp.arguments(LoginParamsSchema)
+    @auth_blp.response(401, schema=PagingError, description="Invalid credentials")
     @auth_blp.response(201, schema=LoginResponseSchema, description="Log the user")
     def post(self, user_login: dict):
+        """Login the user"""
         logger.debug(f"Authenticate user with email: {user_login.get('email')}")
         email = user_login.get("email")
         password = user_login.get("password")
@@ -41,5 +45,6 @@ class LoginAuthView(MethodView):
         
         token = create_access_token(identity=email)
         return {
+            "msg": "Logged",
             "token": token
         }

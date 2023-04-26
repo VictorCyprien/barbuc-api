@@ -8,6 +8,9 @@ run:
 shell:
 	export FLASK_APP=run; export FLASK_ENV=development; flask shell;
 
+build_schemas:
+	export FLASK_APP=run; flask openapi write specs/barbuc-spec.json;
+
 clean:
 	@echo
 	@echo "---- Clean *.pyc ----"

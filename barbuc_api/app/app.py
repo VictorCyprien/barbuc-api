@@ -48,7 +48,24 @@ def create_flask_app(config: Config) -> Flask:
         jti = jwt_payload["jti"]
         token_in_redis = jwt_redis_blocklist.get(jti)
         return token_in_redis is not None
+
+    @jwt.expired_token_loader
+    def my_expired_token_callback(jwt_header, jwt_payload):
+        return jsonify(code=401, message="Token expired", status="Unauthorized"), 401
+
+    @jwt.unauthorized_loader
+    def my_missing_token_callback(callback):
+        return jsonify(code=401, message="Not Authenticated", status="Unauthorized"), 401
     
+    @jwt.invalid_token_loader
+    def my_invalid_token(callback):
+        return jsonify(code=401, message="Invalid token", status="Unauthorized"), 401
+    
+    @jwt.revoked_token_loader
+    def my_missing_token_callback(jwt_header, jwt_payload):
+        return jsonify(code=401, message="Not Authenticated", status="Unauthorized"), 401
+    
+
     app.extensions['jwt_redis_blocklist'] = jwt_redis_blocklist
 
     # csrf = CSRFProtect()
