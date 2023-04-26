@@ -3,6 +3,8 @@ import logging
 from flask.views import MethodView
 from flask_jwt_extended import create_access_token
 from mongoengine.errors import DoesNotExist
+from datetime import datetime
+import pytz
 
 from .auth_blp import auth_blp
 
@@ -45,6 +47,7 @@ class LoginAuthView(MethodView):
             raise Unauthorized(ReasonError.BAD_CREDENTIALS.value)
         
         token = create_access_token(identity=user.user_id)
+        user.last_login = datetime.now(tz=pytz.utc).replace(microsecond=0)
         return {
             "msg": "Logged",
             "token": token
