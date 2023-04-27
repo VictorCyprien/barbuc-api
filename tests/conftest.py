@@ -12,6 +12,7 @@ import pytest
 import freezegun
 
 from barbuc_api.models.user import User
+from barbuc_api.models.barbucue import Barbucue
 
 
 @pytest.fixture(scope='session')
@@ -74,6 +75,8 @@ def client_member(client: TestClient, member: User) -> FlaskClient:
     _raz_auth_headers(client)
 
 
+#### USERS ####
+
 @pytest.fixture(scope='function')
 def victor(app) -> User:
     #  victor is "superadmin"
@@ -121,8 +124,40 @@ def member(app) -> User:
     user.delete()
 
 
+#### BARBUCUES ####
+
+@pytest.fixture(scope='function')
+def toulouse(app) -> Barbucue:
+    barbuc_dict = {
+        "name": "Mon Barbuc à Toulouse",
+        "place": "Toulouse",
+        "date": "2023-04-27 18:30:00"
+    }
+    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+        barbucue = Barbucue.create(barbuc_dict)
+        barbucue.save()
+    yield barbucue
+    barbucue.delete()
+
+
+@pytest.fixture(scope='function')
+def paris(app) -> Barbucue:
+    barbuc_dict = {
+        "name": "Mon Barbuc à Paris",
+        "place": "Paris",
+        "date": "2023-04-27 18:30:00"
+    }
+    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+        barbucue = Barbucue.create(barbuc_dict)
+        barbucue.save()
+    yield barbucue
+    barbucue.delete()
+
+
+#### MOCKS ####
+
 @pytest.fixture
-def mock_save_document():
+def mock_save_user_document():
     from barbuc_api.models.user import User
     from mongoengine.errors import ValidationError
     _original = User.save
@@ -130,3 +165,14 @@ def mock_save_document():
     User.save.side_effect = ValidationError
     yield User.save
     User.save = _original
+
+
+@pytest.fixture
+def mock_save_barbucue_document():
+    from barbuc_api.models.barbucue import Barbucue
+    from mongoengine.errors import ValidationError
+    _original = Barbucue.save
+    Barbucue.save = Mock()
+    Barbucue.save.side_effect = ValidationError
+    yield Barbucue.save
+    Barbucue.save = _original

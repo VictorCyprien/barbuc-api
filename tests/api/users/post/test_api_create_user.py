@@ -171,8 +171,8 @@ def test_create_user_email_already_used(client: Flask, victor: User):
         'status': 'Bad Request'
     }
 
-def test_user_error_during_save(client: Flask, victor: User, mock_save_document):
-    mock_save_document.side_effect = None
+def test_user_error_during_save(client: Flask, victor: User, mock_save_user_document):
+    mock_save_user_document.side_effect = None
     data_login = {
         "email": victor.email,
         "password": "beedemo"
@@ -188,7 +188,7 @@ def test_user_error_during_save(client: Flask, victor: User, mock_save_document)
         "name": "TestUser"
     }
 
-    mock_save_document.side_effect = ValidationError
+    mock_save_user_document.side_effect = ValidationError
 
     res = client.post("/api/users/", json=data, headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 400
@@ -196,8 +196,8 @@ def test_user_error_during_save(client: Flask, victor: User, mock_save_document)
     print(data)
     assert data == {
         'code': 400,
-        'message': 'An error has occured during profil update, please try again',
+        'message': 'An error has occured during profil creation, please try again',
         'status': 'Bad Request'
     }
 
-    mock_save_document.assert_called()
+    mock_save_user_document.assert_called()

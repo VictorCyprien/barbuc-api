@@ -51,7 +51,7 @@ class RootUsersView(AbstractUsersView):
         try:
             user.save()
         except ValidationError:
-            raise BadRequest(ReasonError.UPDATE_USER_ERROR.value)
+            raise BadRequest(ReasonError.CREATE_USER_ERROR.value)
         except NotUniqueError:
             raise BadRequest(ReasonError.EMAIL_ALREADY_USED.value)
 

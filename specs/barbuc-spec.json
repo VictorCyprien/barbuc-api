@@ -279,6 +279,205 @@
         ],
         "operationId": "Logout"
       }
+    },
+    "/api/barbucues/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "List of barbucues found in the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBarbucuesList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "summary": "Retrieve list of barbucues",
+        "tags": [
+          "barbucues"
+        ],
+        "operationId": "ListBarbucues"
+      },
+      "post": {
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
+          },
+          "201": {
+            "description": "Infos of new barbucue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarbucueResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unautorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputCreateBarbucue"
+              }
+            }
+          }
+        },
+        "summary": "Create a new barbucue",
+        "tags": [
+          "barbucues"
+        ],
+        "operationId": "CreateBarbucue"
+      }
+    },
+    "/api/barbucues/{barbucue_id}": {
+      "put": {
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
+          },
+          "200": {
+            "description": "Update one barbucue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarbucueResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputUpdateBarbucue"
+              }
+            }
+          }
+        },
+        "summary": "Update an existing barbucue",
+        "tags": [
+          "barbucues"
+        ],
+        "operationId": "UpdateBarbucue"
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Delete one barbucue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarbucueResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "summary": "Delete an existing barbucue",
+        "tags": [
+          "barbucues"
+        ],
+        "operationId": "DeleteBarbucue"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "barbucue_id",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ]
     }
   },
   "info": {
@@ -292,7 +491,11 @@
     },
     {
       "name": "auth",
-      "description": "Auth"
+      "description": "Managing Auth"
+    },
+    {
+      "name": "barbucues",
+      "description": "Managing Barbucues"
     }
   ],
   "openapi": "3.0.2",
@@ -301,6 +504,10 @@
       "Error": {
         "type": "object",
         "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
           "message": {
             "type": "string",
             "description": "Error message"
@@ -312,10 +519,6 @@
           "status": {
             "type": "string",
             "description": "Error name"
-          },
-          "code": {
-            "type": "integer",
-            "description": "Error code"
           }
         }
       },
@@ -462,6 +665,13 @@
           "name": {
             "type": "string",
             "description": "New name of the user"
+          },
+          "scopes": {
+            "type": "array",
+            "description": "New scopes of the user",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "description": "New user information"
@@ -507,6 +717,102 @@
           }
         },
         "description": "Logout details"
+      },
+      "Barbucue": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the barbucue"
+          },
+          "place": {
+            "type": "string",
+            "description": "Place of the barbucue"
+          },
+          "barbuc_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "description": "Unique barbucue identifier"
+          },
+          "_date": {
+            "type": "string",
+            "description": "Date of the barbucue",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "_date",
+          "name",
+          "place"
+        ]
+      },
+      "GetBarbucuesList": {
+        "type": "object",
+        "properties": {
+          "barbucues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Barbucue"
+            }
+          }
+        },
+        "description": "List of barbucues."
+      },
+      "InputCreateBarbucue": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the barbucue"
+          },
+          "place": {
+            "type": "string",
+            "description": "Place of the barbucue"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of the barbucue",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "date",
+          "name",
+          "place"
+        ],
+        "description": "Input informations need to create barbucue."
+      },
+      "BarbucueResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "barbucue": {
+            "$ref": "#/components/schemas/Barbucue"
+          }
+        },
+        "description": "Create/Update/Delete a barbucue."
+      },
+      "InputUpdateBarbucue": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "New name of the barbucue"
+          },
+          "place": {
+            "type": "string",
+            "description": "New place of the barbucue"
+          },
+          "date": {
+            "type": "string",
+            "description": "New date of the barbucue",
+            "format": "date-time"
+          }
+        },
+        "description": "Input informations need to update a barbucue."
       }
     },
     "responses": {
