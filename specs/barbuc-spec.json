@@ -311,7 +311,7 @@
         "tags": [
           "barbecues"
         ],
-        "operationId": "ListBarbucues"
+        "operationId": "ListBarbecues"
       },
       "post": {
         "responses": {
@@ -366,7 +366,7 @@
         "tags": [
           "barbecues"
         ],
-        "operationId": "CreateBarbucue"
+        "operationId": "CreateBarbecue"
       }
     },
     "/api/barbecues/{barbecue_id}": {
@@ -423,7 +423,7 @@
         "tags": [
           "barbecues"
         ],
-        "operationId": "UpdateBarbucue"
+        "operationId": "UpdateBarbecue"
       },
       "delete": {
         "responses": {
@@ -504,14 +504,6 @@
       "Error": {
         "type": "object",
         "properties": {
-          "errors": {
-            "type": "object",
-            "description": "Errors"
-          },
-          "message": {
-            "type": "string",
-            "description": "Error message"
-          },
           "status": {
             "type": "string",
             "description": "Error name"
@@ -519,6 +511,14 @@
           "code": {
             "type": "integer",
             "description": "Error code"
+          },
+          "errors": {
+            "type": "object",
+            "description": "Errors"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
           }
         }
       },
@@ -721,14 +721,9 @@
       "Barbecue": {
         "type": "object",
         "properties": {
-          "place": {
+          "name": {
             "type": "string",
-            "description": "Place of the barbecue"
-          },
-          "_date": {
-            "type": "string",
-            "description": "Date of the barbecue",
-            "format": "date-time"
+            "description": "Name of the barbecue"
           },
           "barbecue_id": {
             "type": "integer",
@@ -736,9 +731,14 @@
             "maximum": 2147483647,
             "description": "Unique barbecue identifier"
           },
-          "name": {
+          "_date": {
             "type": "string",
-            "description": "Name of the barbecue"
+            "description": "Date of the barbecue",
+            "format": "date-time"
+          },
+          "place": {
+            "type": "string",
+            "description": "Place of the barbecue"
           }
         },
         "required": [
