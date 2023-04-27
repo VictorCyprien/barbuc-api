@@ -14,7 +14,7 @@
             }
           },
           "401": {
-            "description": "Unautorized",
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -49,7 +49,7 @@
             }
           },
           "401": {
-            "description": "Unautorized",
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -294,7 +294,7 @@
             }
           },
           "401": {
-            "description": "Unautorized",
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -329,7 +329,7 @@
             }
           },
           "401": {
-            "description": "Unautorized",
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -493,7 +493,7 @@
             }
           },
           "404": {
-            "description": "NotFound",
+            "description": "Barbecue not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -587,13 +587,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BarbecueReservationReponse"
+                  "$ref": "#/components/schemas/BarbecueCancelReservationReponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "An error has occured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
                 }
               }
             }
           },
           "401": {
-            "description": "The barbecue is not reserved !",
+            "description": "The barbecue is not reserved",
             "content": {
               "application/json": {
                 "schema": {
@@ -603,7 +613,7 @@
             }
           },
           "404": {
-            "description": "NotFound",
+            "description": "Barbecue not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -638,11 +648,21 @@
       "get": {
         "responses": {
           "200": {
-            "description": "Reserve the current barbecue",
+            "description": "List all the current reservations barbecue",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetBarbecuesReservationsList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
                 }
               }
             }
@@ -897,17 +917,41 @@
         },
         "description": "Logout details"
       },
+      "User1": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "description": "Unique user identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user"
+          }
+        },
+        "description": "User informations."
+      },
       "Barbecue": {
         "type": "object",
         "properties": {
-          "place": {
-            "type": "string",
-            "description": "Place of the barbecue"
+          "user": {
+            "description": "User who reserved the barbecue",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User1"
+              }
+            ]
           },
           "_date": {
             "type": "string",
             "description": "Date of the barbecue",
             "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the barbecue"
           },
           "barbecue_id": {
             "type": "integer",
@@ -915,9 +959,9 @@
             "maximum": 2147483647,
             "description": "Unique barbecue identifier"
           },
-          "name": {
+          "place": {
             "type": "string",
-            "description": "Name of the barbecue"
+            "description": "Place of the barbecue"
           }
         },
         "required": [
@@ -1006,13 +1050,41 @@
         "type": "object",
         "properties": {
           "action": {
-            "type": "string"
+            "type": "string",
+            "description": "Status of the reservation"
           },
           "barbecue": {
-            "$ref": "#/components/schemas/Barbecue"
+            "description": "Reserved barbecue",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Barbecue"
+              }
+            ]
+          }
+        }
+      },
+      "BarbecueCancelReservationReponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "Status of the reservation"
+          },
+          "barbecue": {
+            "description": "Canceled reservation barbecue",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Barbecue"
+              }
+            ]
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "description": "User who canceled the reservation",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
           }
         }
       },
