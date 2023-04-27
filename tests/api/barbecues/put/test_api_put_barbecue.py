@@ -69,7 +69,7 @@ def test_barbecue_update_not_admin(client: Flask, member: User, paris: Barbecue)
     print(data)
     assert data == {
         'code': 404, 
-        'message': f'Barbucue #{paris.barbecue_id} not found !', 
+        'message': f'Barbecue #{paris.barbecue_id} not found !', 
         'status': 'Not Found'
     }
 

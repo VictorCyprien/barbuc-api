@@ -124,7 +124,7 @@ def member(app) -> User:
     user.delete()
 
 
-#### BARBUCUES ####
+#### BARBECUES ####
 
 @pytest.fixture(scope='function')
 def toulouse(app) -> Barbecue:

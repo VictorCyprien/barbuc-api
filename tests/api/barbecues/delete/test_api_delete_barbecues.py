@@ -55,6 +55,6 @@ def test_delete_barbecue_not_admin(client: Flask, member: User, toulouse: Barbec
     print(data)
     assert data == {
         'code': 404, 
-        'message': f'Barbucue #{toulouse.barbecue_id} not found !', 
+        'message': f'Barbecue #{toulouse.barbecue_id} not found !', 
         'status': 'Not Found'
     }

@@ -24,7 +24,7 @@ logger = logging.getLogger('console')
 @barbecues_blp.route('/<int:barbecue_id>')
 class OneBarbecueView(AbstractBarbecuesView):
 
-    @barbecues_blp.doc(operationId='UpdateBarbucue')
+    @barbecues_blp.doc(operationId='UpdateBarbecue')
     @barbecues_blp.arguments(InputUpdateBarbecueSchema)
     @barbecues_blp.response(400, schema=PagingError, description="BadRequest")
     @barbecues_blp.response(404, schema=PagingError, description="NotFound")
@@ -35,7 +35,7 @@ class OneBarbecueView(AbstractBarbecuesView):
         auth_user = User.get_by_id(get_jwt_identity())
         
         if not self.can_read_the_barbecue(auth_user.scopes):
-            raise NotFound(f"Barbucue #{barbecue_id} not found !")
+            raise NotFound(f"Barbecue #{barbecue_id} not found !")
 
         barbecue = Barbecue.get_by_id(id=barbecue_id)
         barbecue.update(input_dict)
@@ -61,7 +61,7 @@ class OneBarbecueView(AbstractBarbecuesView):
         auth_user = User.get_by_id(get_jwt_identity())
         
         if not self.can_read_the_barbecue(auth_user.scopes):
-            raise NotFound(f"Barbucue #{barbecue_id} not found !")
+            raise NotFound(f"Barbecue #{barbecue_id} not found !")
 
         barbecue = Barbecue.get_by_id(id=barbecue_id)
         barbecue.delete()
