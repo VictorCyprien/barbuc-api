@@ -10,6 +10,7 @@ shell:
 
 build_schemas:
 	export FLASK_APP=run; flask openapi write specs/barbuc-spec.json;
+	export FLASK_APP=run; flask openapi write specs/barbuc-spec.yaml;
 
 clean:
 	@echo
