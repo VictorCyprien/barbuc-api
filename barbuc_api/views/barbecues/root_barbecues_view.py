@@ -25,7 +25,7 @@ logger = logging.getLogger('console')
 class RootBarbecuesView(AbstractBarbecuesView):
 
     @barbecues_blp.doc(operationId='ListBarbecues')
-    @barbecues_blp.response(401, schema=PagingError, description="Unautorized")
+    @barbecues_blp.response(401, schema=PagingError, description="Unauthorized")
     @barbecues_blp.response(200, schema=GetBarbecuesListSchema, description="List of barbecues found in the database")
     @jwt_required()
     def get(self):
@@ -44,7 +44,7 @@ class RootBarbecuesView(AbstractBarbecuesView):
     @barbecues_blp.doc(operationId='CreateBarbecue')
     @barbecues_blp.arguments(InputCreateBarbecueSchema)
     @barbecues_blp.response(400, schema=PagingError, description="BadRequest")
-    @barbecues_blp.response(401, schema=PagingError, description="Unautorized")
+    @barbecues_blp.response(401, schema=PagingError, description="Unauthorized")
     @barbecues_blp.response(201, schema=BarbecueResponseSchema, description="Infos of new barbecue")
     @jwt_required()
     def post(self, input_data: dict):

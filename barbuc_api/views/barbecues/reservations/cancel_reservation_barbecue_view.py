@@ -23,8 +23,9 @@ logger = logging.getLogger('console')
 class OneBarbecueCancelReservationView(AbstractBarbecuesView):
 
     @barbecues_blp.doc(operationId='CancelReservationBarbecue')
-    @barbecues_blp.response(404, schema=PagingError, description="NotFound")
-    @barbecues_blp.response(401, schema=PagingError, description="The barbecue is not reserved !")
+    @barbecues_blp.response(404, schema=PagingError, description="Barbecue not found")
+    @barbecues_blp.response(401, schema=PagingError, description="The barbecue is not reserved")
+    @barbecues_blp.response(400, schema=PagingError, description="An error has occured")
     @barbecues_blp.response(201, schema=BarbecueCancelReservationReponse, description="Cancel the reservation of the current barbecue")
     @jwt_required()
     def post(self, barbecue_id: int):

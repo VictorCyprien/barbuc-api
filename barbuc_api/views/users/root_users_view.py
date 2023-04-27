@@ -24,7 +24,7 @@ logger = logging.getLogger('console')
 class RootUsersView(AbstractUsersView):
 
     @users_blp.doc(operationId='ListUsers')
-    @users_blp.response(401, schema=PagingError, description="Unautorized")
+    @users_blp.response(401, schema=PagingError, description="Unauthorized")
     @users_blp.response(200, schema=GetUsersListSchema, description="List of users found in the database")
     @jwt_required()
     def get(self):
@@ -39,7 +39,7 @@ class RootUsersView(AbstractUsersView):
     @users_blp.doc(operationId='CreateUser')
     @users_blp.arguments(InputCreateUserSchema)
     @users_blp.response(400, schema=PagingError, description="BadRequest")
-    @users_blp.response(401, schema=PagingError, description="Unautorized")
+    @users_blp.response(401, schema=PagingError, description="Unauthorized")
     @users_blp.response(201, schema=UserResponseSchema, description="Infos of new user")
     @jwt_required()
     def post(self, input_data: dict):

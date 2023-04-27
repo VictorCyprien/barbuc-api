@@ -18,7 +18,7 @@ logger = logging.getLogger('console')
 class OneBarbecueAvailableView(AbstractBarbecuesView):
 
     @barbecues_blp.doc(operationId='CheckBarbecueAvailable')
-    @barbecues_blp.response(404, schema=PagingError, description="NotFound")
+    @barbecues_blp.response(404, schema=PagingError, description="Barbecue not found")
     @barbecues_blp.response(200, schema=BarbecueAvailableReponse, description="Check if one barbecue is avaiable")
     @jwt_required()
     def get(self, barbecue_id: int):

@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..barbecues_blp import barbecues_blp
 from ..abstract_barbecue_view import AbstractBarbecuesView
 
+from ....schemas.communs_schemas import PagingError
 from ....schemas.reservation_barbecue_schemas import (
     GetBarbecuesReservationsListSchema
 )
@@ -19,7 +20,8 @@ logger = logging.getLogger('console')
 class ListBarbecuesReservationsView(AbstractBarbecuesView):
 
     @barbecues_blp.doc(operationId='ListReservationsBarbecues')
-    @barbecues_blp.response(200, schema=GetBarbecuesReservationsListSchema, description="Reserve the current barbecue")
+    @barbecues_blp.response(401, schema=PagingError, description="Unauthorized")
+    @barbecues_blp.response(200, schema=GetBarbecuesReservationsListSchema, description="List all the current reservations barbecue")
     @jwt_required()
     def get(self):
         """List the current reservations of barbecues"""
