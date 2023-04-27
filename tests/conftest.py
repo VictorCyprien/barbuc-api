@@ -153,6 +153,20 @@ def paris(app) -> Barbecue:
     yield barbecue
     barbecue.delete()
 
+@pytest.fixture(scope='function')
+def dijon(app, victor) -> Barbecue:
+    barbuc_dict = {
+        "name": "Mon Barbuc à Dijon",
+        "place": "Dijon",
+        "date": "2023-04-27 18:30:00"
+    }
+    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+        barbecue = Barbecue.create(barbuc_dict)
+        barbecue.user = victor
+        barbecue.save()
+    yield barbecue
+    barbecue.delete()
+
 
 #### MOCKS ####
 
