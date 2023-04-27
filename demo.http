@@ -9,7 +9,6 @@ Content-Type: application/json
 
 ###
 @TOKEN=token
-
 ###
 GET http://localhost:5001/api/users
 Authorization: Bearer {{TOKEN}}
@@ -43,12 +42,12 @@ Authorization: Bearer {{TOKEN}}
 
 
 ###
-GET http://localhost:5001/api/barbucues
+GET http://localhost:5001/api/barbecues
 Authorization: Bearer {{TOKEN}}
 
 ###
 
-POST http://localhost:5001/api/barbucues
+POST http://localhost:5001/api/barbecues
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
@@ -61,7 +60,7 @@ Authorization: Bearer {{TOKEN}}
 
 ###
 
-PUT http://localhost:5001/api/barbucues/362094319
+PUT http://localhost:5001/api/barbecues/362094319
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
@@ -73,8 +72,28 @@ Authorization: Bearer {{TOKEN}}
 
 
 ###
-DELETE  http://localhost:5001/api/barbucues/362094319
+DELETE  http://localhost:5001/api/barbecues/362094319
 Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET http://localhost:5001/api/barbecues/362094319/available
+Authorization: Bearer {{TOKEN}}
+
+
+###
+POST http://localhost:5001/api/barbecues/362094319/reserve
+Authorization: Bearer {{TOKEN}}
+
+
+###
+POST http://localhost:5001/api/barbecues/362094319/cancel
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET http://localhost:5001/api/barbecues/availables
 Authorization: Bearer {{TOKEN}}
 
 

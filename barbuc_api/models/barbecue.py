@@ -9,25 +9,25 @@ from .user import User
 
 BARBUC_ID_MAX_VAL = 2**31-1
 
-class Barbucue(Document):
-    barbuc_id: int = fields.IntField(db_field="barbuc_id", min_value=0, max_value=BARBUC_ID_MAX_VAL, required=True, primary_key=True)
-    """ ID of the barbucue
+class Barbecue(Document):
+    barbecue_id: int = fields.IntField(db_field="barbecue_id", min_value=0, max_value=BARBUC_ID_MAX_VAL, required=True, primary_key=True)
+    """ ID of the barbecue
     """
 
     name: str = fields.StringField(required=True)
-    """ Name of the barbucue
+    """ Name of the barbecue
     """
 
     place: str = fields.StringField(required=True)
-    """ Place of the barbucue
+    """ Place of the barbecue
     """
 
     _date = fields.DateTimeField(db_field="date")
-    """ Date of the barbucue
+    """ Date of the barbecue
     """
 
     user = fields.ReferenceField(User)
-    """ User who reserved the barbucue
+    """ User who reserved the barbecue
     """
 
 
@@ -43,9 +43,9 @@ class Barbucue(Document):
 
     @classmethod
     def create(cls, input_data: dict):
-        barbucue = Barbucue()
-        if 'barbuc_id' not in input_data:
-            input_data['barbuc_id'] = cls._next_id()
+        barbecue = Barbecue()
+        if 'barbecue_id' not in input_data:
+            input_data['barbecue_id'] = cls._next_id()
         if 'name' in input_data:
             name = input_data['name']
             del input_data['name']
@@ -56,13 +56,13 @@ class Barbucue(Document):
             date = input_data['date']
             del input_data['date']
 
-        barbucue.barbuc_id = input_data['barbuc_id']
-        barbucue.name = name
-        barbucue.place = place
+        barbecue.barbecue_id = input_data['barbecue_id']
+        barbecue.name = name
+        barbecue.place = place
 
-        # Set date of barbucue
-        barbucue.date = date
-        return barbucue
+        # Set date of barbecue
+        barbecue.date = date
+        return barbecue
     
 
     def update(self, input_data: dict):
@@ -85,20 +85,20 @@ class Barbucue(Document):
             uid = random.randint(0, BARBUC_ID_MAX_VAL)
             nb_trial += 1
         if nb_trial > 10:
-            raise RuntimeError("Impossible to get new barbucue id")
+            raise RuntimeError("Impossible to get new barbecue id")
         return uid
 
 
     @classmethod
-    def get_by_id(cls, id: int, only: List[str] = None, exclude: List[str] = None) -> "Barbucue":
+    def get_by_id(cls, id: int, only: List[str] = None, exclude: List[str] = None) -> "Barbecue":
         try:
             id = int(id)
         except ValueError:
-            raise ValidationError('barbuc_id should be an int')
-        _query = Barbucue.objects(barbuc_id=id)
+            raise ValidationError('barbecue_id should be an int')
+        _query = Barbecue.objects(barbecue_id=id)
         if only is not None:
             _query = _query.only(*only)
         if exclude is not None:
             _query = _query.exclude(*exclude)
-        barbucue = _query.get()
-        return barbucue
+        barbecue = _query.get()
+        return barbecue

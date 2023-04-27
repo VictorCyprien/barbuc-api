@@ -1,6 +1,6 @@
 # Barbuc-Api
 
-Barbuc-Api is a API REST which manage users and barbucue
+Barbuc-Api is a API REST which manage users and barbecues
 
 ## Requirements
 - Windows or Linux

@@ -4,13 +4,11 @@ import datetime
 
 from unittest.mock import ANY
 
-from mongoengine.errors import ValidationError
-
 from barbuc_api.models.user import User
-from barbuc_api.models.barbucue import Barbucue
+from barbuc_api.models.barbecue import Barbecue
 
 
-def test_create_barbucue(client: Flask, victor: User):
+def test_create_barbecue(client: Flask, victor: User):
     data_login = {
         "email": victor.email,
         "password": "beedemo"
@@ -26,30 +24,30 @@ def test_create_barbucue(client: Flask, victor: User):
         "date": "2023-04-27 18:30:00"
     }
 
-    res = client.post("/api/barbucues/", json=data, headers={'Authorization': f'Bearer {token}'})
+    res = client.post("/api/barbecues/", json=data, headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 201
     data = res.json
     print(data)
     assert data == {
         'action': 'created',
-        'barbucue': {
+        'barbecue': {
             '_date': '2023-04-27 18:30:00',
-            'barbuc_id': ANY,
+            'barbecue_id': ANY,
             'name': 'Mon Barbuc à Montauban',
             'place': 'Montauban'
         }
     }
 
 
-    barbuc_id = data['barbucue']['barbuc_id']
-    barbuc = Barbucue.objects().get(barbuc_id=barbuc_id)
+    barbecue_id = data['barbecue']['barbecue_id']
+    barbuc = Barbecue.objects().get(barbecue_id=barbecue_id)
     assert barbuc.name == 'Mon Barbuc à Montauban'
     assert barbuc.date == datetime.datetime(2023, 4, 27, 18, 30)
 
     barbuc.delete()
 
 
-def test_create_barbucue_invalid_data(client: Flask, victor: User):
+def test_create_barbecue_invalid_data(client: Flask, victor: User):
     data_login = {
         "email": victor.email,
         "password": "beedemo"
@@ -62,7 +60,7 @@ def test_create_barbucue_invalid_data(client: Flask, victor: User):
 
     data = {}
 
-    res = client.post("/api/barbucues/", json=data, headers={'Authorization': f'Bearer {token}'})
+    res = client.post("/api/barbecues/", json=data, headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 422
     data = res.json
     print(data)
@@ -79,7 +77,7 @@ def test_create_barbucue_invalid_data(client: Flask, victor: User):
     }
 
 
-def test_barbucue_error_during_save(client: Flask, victor: User, mock_save_barbucue_document):
+def test_barbecue_error_during_save(client: Flask, victor: User, mock_save_barbecue_document):
     data_login = {
         "email": victor.email,
         "password": "beedemo"
@@ -95,20 +93,20 @@ def test_barbucue_error_during_save(client: Flask, victor: User, mock_save_barbu
         "date": "2023-04-27 18:30:00"
     }
 
-    res = client.post("/api/barbucues/", json=data, headers={'Authorization': f'Bearer {token}'})
+    res = client.post("/api/barbecues/", json=data, headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 400
     data = res.json
     print(data)
     assert data == {
         'code': 400,
-        'message': 'An error has occured during barbucue creation, please try again',
+        'message': 'An error has occured during barbecue creation, please try again',
         'status': 'Bad Request'
     }
 
-    mock_save_barbucue_document.assert_called()
+    mock_save_barbecue_document.assert_called()
 
 
-def test_create_barbucue_not_admin(client: Flask, member: User):
+def test_create_barbecue_not_admin(client: Flask, member: User):
     data_login = {
         "email": member.email,
         "password": "beedemo"
@@ -124,7 +122,7 @@ def test_create_barbucue_not_admin(client: Flask, member: User):
         "date": "2023-04-27 18:30:00"
     }
 
-    res = client.post("/api/barbucues/", json=data, headers={'Authorization': f'Bearer {token}'})
+    res = client.post("/api/barbecues/", json=data, headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 401
     data = res.json
     print(data)
