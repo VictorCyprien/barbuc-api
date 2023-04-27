@@ -19,7 +19,7 @@ from mongoengine import errors, connect
 from healthcheck import HealthCheck
 
 from .config import Config
-from .helpers.check_mongodb import get_mongodb_status
+from .helpers.check_mongodb import mongo_available
 from .helpers.check_redis import redis_available
 from .models.user import User
 
@@ -142,11 +142,11 @@ def create_flask_app(config: Config) -> Flask:
     app.debug = config.FLASK_ENV
 
     # Configure mongo client
-    mongo_engine = connect(config.MONGODB_DATABASE, host=config.MONGODB_URI)
+    connect(config.MONGODB_DATABASE, host=config.MONGODB_URI)    
 
     #Add healthcheck
     health = HealthCheck(app, "/healthcheck")
-    #health.add_check(get_mongodb_status(mongo_engine))
+    health.add_check(mongo_available())
     health.add_check(redis_available(jwt_redis_blocklist))
 
     @app.route('/')
