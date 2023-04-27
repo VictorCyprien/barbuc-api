@@ -2,7 +2,7 @@ from typing import Dict
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from mongoengine.errors import NotUniqueError
+from mongoengine.errors import ValidationError
 
 from .barbucues_blp import barbucues_blp
 from .abstract_barbucue_view import AbstractBarbucuesView
@@ -39,8 +39,12 @@ class OneUserView(AbstractBarbucuesView):
 
         barbucue = Barbucue.get_by_id(id=barbucue_id)
         barbucue.update(input_dict)
-        barbucue.save()
         
+        try:
+            barbucue.save()
+        except ValidationError:
+            raise BadRequest(ReasonError.UPDATE_BARBUCUE_ERROR.value)
+
         return {
             "action": "updated",
             "barbucue": barbucue

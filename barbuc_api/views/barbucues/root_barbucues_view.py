@@ -54,7 +54,11 @@ class RootBarbucuesView(AbstractBarbucuesView):
             raise Unauthorized(ReasonError.BAD_SCOPES.value)
         
         barbucue = Barbucue.create(input_data=input_data)
-        barbucue.save()
+        
+        try:
+            barbucue.save()
+        except ValidationError:
+            raise BadRequest(ReasonError.CREATE_BARBUCUE_ERROR.value)
 
         return {
             'action': 'created',
