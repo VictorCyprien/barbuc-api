@@ -151,8 +151,6 @@ def create_flask_app(config: Config) -> Flask:
     def index():
         res = {
             'name': config.SERVICE_NAME,
-            'commit_name': cname,
-            'commit_sha': csha,
         }
         return jsonify(res)   
 
