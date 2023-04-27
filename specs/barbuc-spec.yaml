@@ -504,10 +504,6 @@
       "Error": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "description": "Error name"
-          },
           "code": {
             "type": "integer",
             "description": "Error code"
@@ -515,6 +511,10 @@
           "message": {
             "type": "string",
             "description": "Error message"
+          },
+          "status": {
+            "type": "string",
+            "description": "Error name"
           },
           "errors": {
             "type": "object",
@@ -721,15 +721,6 @@
       "Barbucue": {
         "type": "object",
         "properties": {
-          "_date": {
-            "type": "string",
-            "description": "Date of the barbucue",
-            "format": "date-time"
-          },
-          "place": {
-            "type": "string",
-            "description": "Place of the barbucue"
-          },
           "name": {
             "type": "string",
             "description": "Name of the barbucue"
@@ -739,6 +730,15 @@
             "minimum": 0,
             "maximum": 2147483647,
             "description": "Unique barbucue identifier"
+          },
+          "_date": {
+            "type": "string",
+            "description": "Date of the barbucue",
+            "format": "date-time"
+          },
+          "place": {
+            "type": "string",
+            "description": "Place of the barbucue"
           }
         },
         "required": [
