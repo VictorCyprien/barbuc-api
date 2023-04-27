@@ -66,6 +66,7 @@ class ReasonError(Enum):
     AUTHENTICATION_FAILED = "Authentication failed"
     BAD_CREDENTIALS = "The email or password is incorrect"
     BAD_AUTH_TOKEN = "The token is present but incorrect"
+    BAD_SCOPES = "You don't have the privileges to perform this action"
     MISSING_AUTH_TOKEN = "The token is missing"
     WRONG_AUTH_TOKEN = "The token is present but invalid"
     UPDATE_USER_ERROR = "An error has occured during profil update, please try again"
