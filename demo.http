@@ -9,6 +9,7 @@ Content-Type: application/json
 
 ###
 @TOKEN=token
+
 ###
 GET http://localhost:5001/api/users
 Authorization: Bearer {{TOKEN}}
@@ -37,6 +38,42 @@ Authorization: Bearer {{TOKEN}}
 
 ###
 DELETE http://localhost:5001/api/users/943602075
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET http://localhost:5001/api/barbucues
+Authorization: Bearer {{TOKEN}}
+
+###
+
+POST http://localhost:5001/api/barbucues
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "name": "Test",
+    "place": "Toulouse",
+    "date": "2023-04-27 18:30:00"
+}
+
+
+###
+
+PUT http://localhost:5001/api/barbucues/362094319
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "name": "Test 2",
+    "place": "Toulouse 2",
+    "date": "2023-04-27 18:45:00"
+}
+
+
+###
+DELETE  http://localhost:5001/api/barbucues/362094319
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
