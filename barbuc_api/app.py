@@ -20,6 +20,7 @@ from healthcheck import HealthCheck
 
 from .config import Config
 from .helpers.check_mongodb import get_mongodb_status
+from .helpers.check_redis import redis_available
 from .models.user import User
 
 
@@ -145,7 +146,8 @@ def create_flask_app(config: Config) -> Flask:
 
     #Add healthcheck
     health = HealthCheck(app, "/healthcheck")
-    health.add_check(get_mongodb_status(mongo_engine))
+    #health.add_check(get_mongodb_status(mongo_engine))
+    health.add_check(redis_available(jwt_redis_blocklist))
 
     @app.route('/')
     def index():
