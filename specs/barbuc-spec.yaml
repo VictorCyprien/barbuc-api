@@ -280,15 +280,15 @@
         "operationId": "Logout"
       }
     },
-    "/api/barbucues/": {
+    "/api/barbecues/": {
       "get": {
         "responses": {
           "200": {
-            "description": "List of barbucues found in the database",
+            "description": "List of barbecues found in the database",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBarbucuesList"
+                  "$ref": "#/components/schemas/GetBarbecuesList"
                 }
               }
             }
@@ -307,9 +307,9 @@
             "$ref": "#/components/responses/DEFAULT_ERROR"
           }
         },
-        "summary": "Retrieve list of barbucues",
+        "summary": "Retrieve list of barbecues",
         "tags": [
-          "barbucues"
+          "barbecues"
         ],
         "operationId": "ListBarbucues"
       },
@@ -319,11 +319,11 @@
             "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
           },
           "201": {
-            "description": "Infos of new barbucue",
+            "description": "Infos of new barbecue",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BarbucueResponse"
+                  "$ref": "#/components/schemas/BarbecueResponse"
                 }
               }
             }
@@ -357,30 +357,30 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/InputCreateBarbucue"
+                "$ref": "#/components/schemas/InputCreateBarbecue"
               }
             }
           }
         },
-        "summary": "Create a new barbucue",
+        "summary": "Create a new barbecue",
         "tags": [
-          "barbucues"
+          "barbecues"
         ],
         "operationId": "CreateBarbucue"
       }
     },
-    "/api/barbucues/{barbucue_id}": {
+    "/api/barbecues/{barbecue_id}": {
       "put": {
         "responses": {
           "422": {
             "$ref": "#/components/responses/UNPROCESSABLE_ENTITY"
           },
           "200": {
-            "description": "Update one barbucue",
+            "description": "Update one barbecue",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BarbucueResponse"
+                  "$ref": "#/components/schemas/BarbecueResponse"
                 }
               }
             }
@@ -414,25 +414,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/InputUpdateBarbucue"
+                "$ref": "#/components/schemas/InputUpdateBarbecue"
               }
             }
           }
         },
-        "summary": "Update an existing barbucue",
+        "summary": "Update an existing barbecue",
         "tags": [
-          "barbucues"
+          "barbecues"
         ],
         "operationId": "UpdateBarbucue"
       },
       "delete": {
         "responses": {
           "200": {
-            "description": "Delete one barbucue",
+            "description": "Delete one barbecue",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BarbucueResponse"
+                  "$ref": "#/components/schemas/BarbecueResponse"
                 }
               }
             }
@@ -461,16 +461,16 @@
             "$ref": "#/components/responses/DEFAULT_ERROR"
           }
         },
-        "summary": "Delete an existing barbucue",
+        "summary": "Delete an existing barbecue",
         "tags": [
-          "barbucues"
+          "barbecues"
         ],
-        "operationId": "DeleteBarbucue"
+        "operationId": "DeleteBarbecue"
       },
       "parameters": [
         {
           "in": "path",
-          "name": "barbucue_id",
+          "name": "barbecue_id",
           "required": true,
           "schema": {
             "type": "integer",
@@ -494,8 +494,8 @@
       "description": "Managing Auth"
     },
     {
-      "name": "barbucues",
-      "description": "Managing Barbucues"
+      "name": "barbecues",
+      "description": "Managing Barbecues"
     }
   ],
   "openapi": "3.0.2",
@@ -508,10 +508,6 @@
             "type": "integer",
             "description": "Error code"
           },
-          "message": {
-            "type": "string",
-            "description": "Error message"
-          },
           "status": {
             "type": "string",
             "description": "Error name"
@@ -519,6 +515,10 @@
           "errors": {
             "type": "object",
             "description": "Errors"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
           }
         }
       },
@@ -718,27 +718,27 @@
         },
         "description": "Logout details"
       },
-      "Barbucue": {
+      "Barbecue": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the barbucue"
-          },
-          "barbuc_id": {
+          "barbecue_id": {
             "type": "integer",
             "minimum": 0,
             "maximum": 2147483647,
-            "description": "Unique barbucue identifier"
-          },
-          "_date": {
-            "type": "string",
-            "description": "Date of the barbucue",
-            "format": "date-time"
+            "description": "Unique barbecue identifier"
           },
           "place": {
             "type": "string",
-            "description": "Place of the barbucue"
+            "description": "Place of the barbecue"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the barbecue"
+          },
+          "_date": {
+            "type": "string",
+            "description": "Date of the barbecue",
+            "format": "date-time"
           }
         },
         "required": [
@@ -747,32 +747,32 @@
           "place"
         ]
       },
-      "GetBarbucuesList": {
+      "GetBarbecuesList": {
         "type": "object",
         "properties": {
-          "barbucues": {
+          "barbecues": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Barbucue"
+              "$ref": "#/components/schemas/Barbecue"
             }
           }
         },
-        "description": "List of barbucues."
+        "description": "List of barbecues."
       },
-      "InputCreateBarbucue": {
+      "InputCreateBarbecue": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of the barbucue"
+            "description": "Name of the barbecue"
           },
           "place": {
             "type": "string",
-            "description": "Place of the barbucue"
+            "description": "Place of the barbecue"
           },
           "date": {
             "type": "string",
-            "description": "Date of the barbucue",
+            "description": "Date of the barbecue",
             "format": "date-time"
           }
         },
@@ -781,38 +781,38 @@
           "name",
           "place"
         ],
-        "description": "Input informations need to create barbucue."
+        "description": "Input informations need to create barbecue."
       },
-      "BarbucueResponse": {
+      "BarbecueResponse": {
         "type": "object",
         "properties": {
           "action": {
             "type": "string"
           },
-          "barbucue": {
-            "$ref": "#/components/schemas/Barbucue"
+          "barbecue": {
+            "$ref": "#/components/schemas/Barbecue"
           }
         },
-        "description": "Create/Update/Delete a barbucue."
+        "description": "Create/Update/Delete a barbecue."
       },
-      "InputUpdateBarbucue": {
+      "InputUpdateBarbecue": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "description": "New name of the barbucue"
+            "description": "New name of the barbecue"
           },
           "place": {
             "type": "string",
-            "description": "New place of the barbucue"
+            "description": "New place of the barbecue"
           },
           "date": {
             "type": "string",
-            "description": "New date of the barbucue",
+            "description": "New date of the barbecue",
             "format": "date-time"
           }
         },
-        "description": "Input informations need to update a barbucue."
+        "description": "Input informations need to update a barbecue."
       }
     },
     "responses": {
