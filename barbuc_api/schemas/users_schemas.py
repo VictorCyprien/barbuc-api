@@ -9,8 +9,9 @@ class UserSchema(Schema):
         validate=Range(min=0, min_inclusive=False, max=USER_ID_MAX_VAL, max_inclusive=False),
         metadata={"description": "Unique user identifier"}
     )
-    name = fields.String(metadata={"exclude_if_null": True, "description": "Name of the user"})
-    email = fields.String(metadata={"exclude_if_null": True, "description": "Email of the user"})
+    name = fields.String(metadata={"description": "Name of the user"})
+    email = fields.String(metadata={"description": "Email of the user"})
+    scopes = fields.List(fields.String, metadata={"description": "Scopes of the user"})
 
     _last_login = fields.String(
         format="date-time",
