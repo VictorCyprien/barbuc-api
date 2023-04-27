@@ -17,9 +17,26 @@ class BarbecueAvailableReponse(Schema):
 
 
 class BarbecueReservationReponse(Schema):
-    action = fields.String()
-    barbecue = fields.Nested(BarbecueSchema)
-    user = fields.Nested(UserSchema)
+    action = fields.String(metadata={"description": "Status of the reservation"})
+    barbecue = fields.Nested(
+        BarbecueSchema,
+        metadata={"description": "Reserved barbecue"}
+    )
+
+    class Meta:
+        ordered = True
+
+
+class BarbecueCancelReservationReponse(Schema):
+    action = fields.String(metadata={"description": "Status of the reservation"})
+    barbecue = fields.Nested(
+        BarbecueSchema,
+        metadata={"description": "Canceled reservation barbecue"}
+    )
+    user = fields.Nested(
+        UserSchema,
+        metadata={"description": "User who canceled the reservation"}
+    )
 
     class Meta:
         ordered = True

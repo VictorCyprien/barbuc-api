@@ -1,5 +1,7 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, post_dump
 from marshmallow.validate import Range
+
+from ..schemas.users_schemas import UserSchema
 
 from ..models.barbecue import BARBUC_ID_MAX_VAL
 
@@ -17,6 +19,24 @@ class BarbecueSchema(Schema):
         metadata={"description": "Date of the barbecue"},
         required=True
     )
+    user = fields.Nested(
+        UserSchema,
+        only=('user_id', 'name'),
+        metadata={
+            "exclude_if_null": True,
+            "description": "User who reserved the barbecue",
+        }
+    )
+
+    @post_dump
+    def exclude_if_null(self, in_data, **kwargs):
+        for key, value in self.fields.items():
+            if value.metadata.get('exclude_if_null') and key in in_data and in_data[key] is None:
+                del in_data[key]
+            if value.metadata.get('exclude_if_empty') and hasattr(in_data.get(key) , '__len__') and len(in_data.get(key)) == 0:
+                del in_data[key]
+        return in_data
+
 
 
 class BarbecueResponseSchema(Schema):
