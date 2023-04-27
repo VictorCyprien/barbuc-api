@@ -2,7 +2,7 @@ from typing import Dict
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from mongoengine.errors import ValidationError
+from mongoengine.errors import ValidationError, DoesNotExist
 
 from ..barbecues_blp import barbecues_blp
 from ..abstract_barbecue_view import AbstractBarbecuesView
@@ -29,12 +29,8 @@ class OneBarbecueAvailableView(AbstractBarbecuesView):
     @jwt_required()
     def get(self, barbecue_id: int):
         """Check if the barbecue is available"""
-        barbecue = Barbecue.get_by_id(barbecue_id)
-        if not barbecue:
-            raise NotFound(f"Barbecue #{barbecue_id} not found !")
-        available = False
-        if barbecue.user is None:
-            available = True
+        barbecue = self.get_barbecue(barbecue_id)
+        available = barbecue.user is None
 
         return {
             "is_available": available

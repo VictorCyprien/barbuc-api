@@ -30,10 +30,7 @@ class OneBarbecueReservationView(AbstractBarbecuesView):
     @jwt_required()
     def post(self, barbecue_id: int):
         """Reserve the current barbecue"""
-        barbecue = Barbecue.get_by_id(barbecue_id)
-        if not barbecue:
-            raise NotFound(f"Barbecue #{barbecue_id} not found !")
-        
+        barbecue = self.get_barbecue(barbecue_id)
         if barbecue.user is not None:
             raise Unauthorized(ReasonError.BARBECUE_ALREADY_RESERVED.value)
         

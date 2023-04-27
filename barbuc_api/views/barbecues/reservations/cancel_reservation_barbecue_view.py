@@ -2,14 +2,14 @@ from typing import Dict
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from mongoengine.errors import ValidationError
+from mongoengine.errors import ValidationError, DoesNotExist
 
 from ..barbecues_blp import barbecues_blp
 from ..abstract_barbecue_view import AbstractBarbecuesView
 
 from ....schemas.communs_schemas import PagingError
 from ....schemas.reservation_barbecue_schemas import (
-    BarbecueReservationReponse
+    BarbecueCancelReservationReponse
 )
 
 from ....models.user import User
@@ -26,13 +26,11 @@ class OneBarbecueCancelReservationView(AbstractBarbecuesView):
     @barbecues_blp.doc(operationId='CancelReservationBarbecue')
     @barbecues_blp.response(404, schema=PagingError, description="NotFound")
     @barbecues_blp.response(401, schema=PagingError, description="The barbecue is not reserved !")
-    @barbecues_blp.response(201, schema=BarbecueReservationReponse, description="Cancel the reservation of the current barbecue")
+    @barbecues_blp.response(201, schema=BarbecueCancelReservationReponse, description="Cancel the reservation of the current barbecue")
     @jwt_required()
     def post(self, barbecue_id: int):
         """Cancel the reservation of the current barbecue"""
-        barbecue = Barbecue.get_by_id(barbecue_id)
-        if not barbecue:
-            raise NotFound(f"Barbecue #{barbecue_id} not found !")
+        barbecue = self.get_barbecue(barbecue_id)
         
         if barbecue.user is None:
             raise Unauthorized(ReasonError.BARBECUE_NOT_RESERVED.value)

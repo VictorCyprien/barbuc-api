@@ -37,7 +37,7 @@ class OneBarbecueView(AbstractBarbecuesView):
         if not self.can_read_the_barbecue(auth_user.scopes):
             raise NotFound(f"Barbecue #{barbecue_id} not found !")
 
-        barbecue = Barbecue.get_by_id(id=barbecue_id)
+        barbecue = self.get_barbecue(barbecue_id)
         barbecue.update(input_dict)
         
         try:
