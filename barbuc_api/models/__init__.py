@@ -1,2 +1,2 @@
 from .user import User
-from .barbucue import Barbucue
+from .barbecue import Barbecue

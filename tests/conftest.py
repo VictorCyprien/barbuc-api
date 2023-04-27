@@ -12,7 +12,7 @@ import pytest
 import freezegun
 
 from barbuc_api.models.user import User
-from barbuc_api.models.barbucue import Barbucue
+from barbuc_api.models.barbecue import Barbecue
 
 
 @pytest.fixture(scope='session')
@@ -127,31 +127,31 @@ def member(app) -> User:
 #### BARBUCUES ####
 
 @pytest.fixture(scope='function')
-def toulouse(app) -> Barbucue:
+def toulouse(app) -> Barbecue:
     barbuc_dict = {
         "name": "Mon Barbuc à Toulouse",
         "place": "Toulouse",
         "date": "2023-04-27 18:30:00"
     }
     with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
-        barbucue = Barbucue.create(barbuc_dict)
-        barbucue.save()
-    yield barbucue
-    barbucue.delete()
+        barbecue = Barbecue.create(barbuc_dict)
+        barbecue.save()
+    yield barbecue
+    barbecue.delete()
 
 
 @pytest.fixture(scope='function')
-def paris(app) -> Barbucue:
+def paris(app) -> Barbecue:
     barbuc_dict = {
         "name": "Mon Barbuc à Paris",
         "place": "Paris",
         "date": "2023-04-27 18:30:00"
     }
     with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
-        barbucue = Barbucue.create(barbuc_dict)
-        barbucue.save()
-    yield barbucue
-    barbucue.delete()
+        barbecue = Barbecue.create(barbuc_dict)
+        barbecue.save()
+    yield barbecue
+    barbecue.delete()
 
 
 #### MOCKS ####
@@ -168,11 +168,11 @@ def mock_save_user_document():
 
 
 @pytest.fixture
-def mock_save_barbucue_document():
-    from barbuc_api.models.barbucue import Barbucue
+def mock_save_barbecue_document():
+    from barbuc_api.models.barbecue import Barbecue
     from mongoengine.errors import ValidationError
-    _original = Barbucue.save
-    Barbucue.save = Mock()
-    Barbucue.save.side_effect = ValidationError
-    yield Barbucue.save
-    Barbucue.save = _original
+    _original = Barbecue.save
+    Barbecue.save = Mock()
+    Barbecue.save.side_effect = ValidationError
+    yield Barbecue.save
+    Barbecue.save = _original

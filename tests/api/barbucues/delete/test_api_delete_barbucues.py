@@ -4,9 +4,9 @@ from rich import print
 from unittest.mock import ANY
 
 from barbuc_api.models.user import User
-from barbuc_api.models.barbucue import Barbucue
+from barbuc_api.models.barbecue import Barbecue
 
-def test_delete_barbucue(client: Flask, victor: User, toulouse: Barbucue):
+def test_delete_barbecue(client: Flask, victor: User, toulouse: Barbecue):
     data_login = {
         "email": victor.email,
         "password": "beedemo"
@@ -16,30 +16,30 @@ def test_delete_barbucue(client: Flask, victor: User, toulouse: Barbucue):
     token = res.json["token"]
     assert res.status_code == 201
 
-    res = client.delete(f"/api/barbucues/{toulouse.barbuc_id}", headers={'Authorization': f'Bearer {token}'})
+    res = client.delete(f"/api/barbecues/{toulouse.barbecue_id}", headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 200
     data = res.json
     print(data)
     assert data == {
         'action': 'deleted',
-        'barbucue': {
+        'barbecue': {
             '_date': '2023-04-27 18:30:00',
-            'barbuc_id': ANY,
+            'barbecue_id': ANY,
             'name': 'Mon Barbuc à Toulouse',
             'place': 'Toulouse'
         }
     }
 
 
-def test_delete_barbucue_not_auth(client: Flask, victor: User, toulouse: Barbucue):
-    res = client.delete(f"/api/barbucues/{toulouse.barbuc_id}")
+def test_delete_barbecue_not_auth(client: Flask, victor: User, toulouse: Barbecue):
+    res = client.delete(f"/api/barbecues/{toulouse.barbecue_id}")
     assert res.status_code == 401
     data = res.json
     print(data)
     assert data == {'msg': 'Missing Authorization Header'}
 
 
-def test_delete_barbucue_not_admin(client: Flask, member: User, toulouse: Barbucue):
+def test_delete_barbecue_not_admin(client: Flask, member: User, toulouse: Barbecue):
     data_login = {
         "email": member.email,
         "password": "beedemo"
@@ -49,12 +49,12 @@ def test_delete_barbucue_not_admin(client: Flask, member: User, toulouse: Barbuc
     token = res.json["token"]
     assert res.status_code == 201
 
-    res = client.delete(f"/api/barbucues/{toulouse.barbuc_id}", headers={'Authorization': f'Bearer {token}'})
+    res = client.delete(f"/api/barbecues/{toulouse.barbecue_id}", headers={'Authorization': f'Bearer {token}'})
     assert res.status_code == 404
     data = res.json
     print(data)
     assert data == {
         'code': 404, 
-        'message': f'Barbucue #{toulouse.barbuc_id} not found !', 
+        'message': f'Barbucue #{toulouse.barbecue_id} not found !', 
         'status': 'Not Found'
     }
