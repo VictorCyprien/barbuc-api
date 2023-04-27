@@ -22,6 +22,10 @@ class Config:
         self.MONGODB_DATABASE = env.str('MONGODB_DATABASE', "barbuc-api")
         self.MONGODB_CONNECT = False
 
+        # REDIS
+        self.REDIS_URI = env.str('REDIS_URI', "localhost")
+        self.REDIS_PORT = env.int('REDIS_PORT', 6379)
+
         # PASSWORD CUSTOM SALT
         self.SECURITY_PASSWORD_SALT = env.str('SECURITY_PASSWORD_SALT', "123456")
 

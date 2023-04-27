@@ -65,7 +65,7 @@ def create_flask_app(config: Config) -> Flask:
     jwt = JWTManager(app)
 
     jwt_redis_blocklist = redis.StrictRedis(
-        host="localhost", port=6379, db=0, decode_responses=True
+        host=config.REDIS_URI, port=config.REDIS_PORT, db=0, decode_responses=True
     )
 
     @jwt.token_in_blocklist_loader
