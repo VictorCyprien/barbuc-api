@@ -32,10 +32,6 @@ def test_cancel_reservation_barbecue(client: Flask, victor: User, toulouse: Barb
             'place': 'Toulouse'
         },
         'user': {
-            '_creation_time': '2000-01-01 00:00:00',
-            '_last_login': ANY,
-            '_update_time': '2000-01-01 00:00:00',
-            'email': 'victor.cyprien@barbuc.fr',
             'name': 'Victor CYPRIEN',
             'user_id': ANY
         }

@@ -33,6 +33,7 @@ def test_user_update(client: Flask, victor: User):
             '_update_time': ANY,
             'email': 'vic.vic@vic.fr',
             'name': 'Vic',
+            'scopes': ['user:admin'],
             'user_id': ANY
         }
     }

@@ -36,6 +36,7 @@ def test_create_user(client: Flask, victor: User):
             '_update_time': ANY,
             'email': 'test.test@test.fr',
             'name': 'TestUser',
+            'scopes': ['user:member'],
             'user_id': ANY
         }
     }
