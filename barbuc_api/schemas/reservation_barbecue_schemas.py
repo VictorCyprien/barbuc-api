@@ -35,6 +35,7 @@ class BarbecueCancelReservationReponse(Schema):
     )
     user = fields.Nested(
         UserSchema,
+        only=('user_id', 'name'),
         metadata={"description": "User who canceled the reservation"}
     )
 
