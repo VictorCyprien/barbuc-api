@@ -478,6 +478,185 @@
           }
         }
       ]
+    },
+    "/api/barbecues/{barbecue_id}/available": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Check if one barbecue is avaiable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarbecueAvailableReponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "summary": "Check if the barbecue is available",
+        "tags": [
+          "barbecues"
+        ],
+        "operationId": "CheckBarbecueAvailable"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "barbecue_id",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ]
+    },
+    "/api/barbecues/{barbecue_id}/reserve": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Reserve the current barbecue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarbecueReservationReponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The barbecue is already reserved !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "summary": "Reserve the current barbecue",
+        "tags": [
+          "barbecues"
+        ],
+        "operationId": "ReserveBarbecue"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "barbecue_id",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ]
+    },
+    "/api/barbecues/{barbecue_id}/cancel": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Cancel the reservation of the current barbecue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarbecueReservationReponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The barbecue is not reserved !",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingError"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "summary": "Cancel the reservation of the current barbecue",
+        "tags": [
+          "barbecues"
+        ],
+        "operationId": "CancelReservationBarbecue"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "barbecue_id",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ]
+    },
+    "/api/barbecues/availables": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Reserve the current barbecue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBarbecuesReservationsList"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "summary": "List the current reservations of barbecues",
+        "tags": [
+          "barbecues"
+        ],
+        "operationId": "ListReservationsBarbecues"
+      }
     }
   },
   "info": {
@@ -504,6 +683,14 @@
       "Error": {
         "type": "object",
         "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "errors": {
+            "type": "object",
+            "description": "Errors"
+          },
           "status": {
             "type": "string",
             "description": "Error name"
@@ -511,14 +698,6 @@
           "code": {
             "type": "integer",
             "description": "Error code"
-          },
-          "errors": {
-            "type": "object",
-            "description": "Errors"
-          },
-          "message": {
-            "type": "string",
-            "description": "Error message"
           }
         }
       },
@@ -721,15 +900,15 @@
       "Barbecue": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the barbecue"
-          },
           "barbecue_id": {
             "type": "integer",
             "minimum": 0,
             "maximum": 2147483647,
             "description": "Unique barbecue identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the barbecue"
           },
           "_date": {
             "type": "string",
@@ -813,6 +992,40 @@
           }
         },
         "description": "Input informations need to update a barbecue."
+      },
+      "BarbecueAvailableReponse": {
+        "type": "object",
+        "properties": {
+          "is_available": {
+            "type": "boolean",
+            "description": "Is barbecue available ?"
+          }
+        }
+      },
+      "BarbecueReservationReponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "barbecue": {
+            "$ref": "#/components/schemas/Barbecue"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "GetBarbecuesReservationsList": {
+        "type": "object",
+        "properties": {
+          "reservations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Barbecue"
+            }
+          }
+        }
       }
     },
     "responses": {
