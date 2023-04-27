@@ -164,5 +164,8 @@ def create_flask_app(config: Config) -> Flask:
     from .views.auth import auth_blp
     rest_api.register_blueprint(auth_blp)
 
+    from .views.barbucues import barbucues_blp
+    rest_api.register_blueprint(barbucues_blp)
+
     app.logger.debug(f"URL Map: \n{app.url_map}")
     return app
