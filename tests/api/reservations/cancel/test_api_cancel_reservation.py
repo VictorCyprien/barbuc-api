@@ -3,8 +3,6 @@ from rich import print
 
 from unittest.mock import ANY
 
-from mongoengine.errors import ValidationError
-
 from barbuc_api.models.user import User
 from barbuc_api.models.barbecue import Barbecue
 

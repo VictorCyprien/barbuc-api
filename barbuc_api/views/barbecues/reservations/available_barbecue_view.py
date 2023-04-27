@@ -1,8 +1,6 @@
-from typing import Dict
 import logging
 
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from mongoengine.errors import ValidationError, DoesNotExist
+from flask_jwt_extended import jwt_required
 
 from ..barbecues_blp import barbecues_blp
 from ..abstract_barbecue_view import AbstractBarbecuesView
@@ -11,10 +9,6 @@ from ....schemas.communs_schemas import PagingError
 from ....schemas.reservation_barbecue_schemas import (
     BarbecueAvailableReponse
 )
-
-from ....models.user import User
-from ....models.barbecue import Barbecue
-from ....helpers.errors_msg_handler import BadRequest, ReasonError, NotFound
 
 
 logger = logging.getLogger('console')

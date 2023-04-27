@@ -1,7 +1,7 @@
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from mongoengine.errors import NotUniqueError, ValidationError
+from mongoengine.errors import ValidationError
 
 from .barbecues_blp import barbecues_blp
 from .abstract_barbecue_view import AbstractBarbecuesView

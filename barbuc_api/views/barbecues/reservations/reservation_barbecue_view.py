@@ -1,4 +1,3 @@
-from typing import Dict
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -13,8 +12,7 @@ from ....schemas.reservation_barbecue_schemas import (
 )
 
 from ....models.user import User
-from ....models.barbecue import Barbecue
-from ....helpers.errors_msg_handler import BadRequest, ReasonError, NotFound, Unauthorized
+from ....helpers.errors_msg_handler import BadRequest, ReasonError, Unauthorized
 
 
 logger = logging.getLogger('console')
