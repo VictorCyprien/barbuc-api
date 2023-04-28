@@ -35,7 +35,7 @@ Barbuc-Api is a API REST which manage users and barbecues
 6. Install dependencies
     - `make install`
     
-    ___Note___ : If your system can't execute the command `make`, do this instead :
+    ___Note___ : If your system can't execute the command `make`, do this instead :<br>
         - `pip install -r requirements.txt`<br>
         - `pip install -r requirements.dev.txt`<br>
         - `pip install -e ./`<br>
@@ -44,7 +44,7 @@ Barbuc-Api is a API REST which manage users and barbecues
     __Note__ : You need to install Docker to use this API
     Check this link to download Docker : https://www.docker.com/get-started/
 
-    To check if Docker is installed, open a terminal and type : `docker`
+    To check if Docker is installed, open a terminal and type : `docker`<br>
     If you have a command list, congratulation you just install Docker !
 
     Then, you need to create a network :
@@ -93,7 +93,7 @@ To launch the API, use this command :
     - `export FLASK_APP=run; export FLASK_ENV=development; flask run --host=0.0.0.0 --port=5001;`
 
 ### Check the health of MongoDB and Redis service
-You can check the health of MongoDB and Redis when accessing this route : `localhost:5001/healthcheck`
+You can check the health of MongoDB and Redis when accessing this route : `localhost:5001/healthcheck`<br>
 This will inform you if the service are running normally
 
 ### Test the API
@@ -130,7 +130,7 @@ ___Note___ : If your system can't execute the command `make`, do this instead :
     - `docker run -d -p 5000:5000 --env-file .env --name barbuc-api --network barbuc-network barbuc-api`
 Here, we set the port to 5000 and use the env file to apply configuration
 
-To access to the container, just type `localhost:5000` or `YOUR_IP_ADDRESS:5000`
+To access to the container, just type `localhost:5000` or `YOUR_IP_ADDRESS:5000`<br>
 ___Note___ : Anyone who is connected to the same network as you can access the API
 
 ### Generate swagger
