@@ -69,9 +69,9 @@ You need to setup some environnements variables in order to make the API to work
 
 - _MONGODB_URI_ : The URL of the MongoDB database (default is `mongodb://localhost:27017`)
 - _MONGODB_DATABASE_ : The name of the database (default is `barbuc-api`)
-- _SECURITY_PASSWORD_SALT_ : The salt used to encrypt user password (string)
-- _FLASK_JWT_ : The token used to generate access token (integer)
-- _JWT_ACCESS_TOKEN_EXPIRES_ : The number of seconds before a token expire (integer)
+- _SECURITY_PASSWORD_SALT_ : The salt used to encrypt user password
+- _FLASK_JWT_ : The token used to generate access token
+- _JWT_ACCESS_TOKEN_EXPIRES_ : The number of seconds before a token expire
 - _REDIS_URI_ : The URL of Redis (default is `localhost`)
 - _REDIS_PORT_ : The port used for Redis (default is `6379`)
 
@@ -79,7 +79,7 @@ You need to setup some environnements variables in order to make the API to work
 When MongoDB is up, you can create a superadmin using this command :
     - `export FLASK_APP=run; flask user create_superadmin your_password`
 
-This will create a superadmin user into the database and you will be able to login with these credentials :
+    This will create a superadmin user into the database and you will be able to login with these credentials :
     - Login : `admin.admin@admin.fr`
     - Password : `your_password`
 
@@ -88,7 +88,8 @@ __IMPORTANT__ : You will need to update the login of the admin and create others
 12. Launch the API
 To launch the API, use this command :
     - `make run`
-___Note___ : If your system can't execute the command `make`, do this instead :
+
+    ___Note___ : If your system can't execute the command `make`, do this instead :
     - `export FLASK_APP=run; export FLASK_ENV=development; flask run --host=0.0.0.0 --port=5001;`
 
 ### Check the health of MongoDB and Redis service
@@ -117,7 +118,7 @@ The port doesn't need to change, you can leave him at `6379`
 
 Then, build the docker image using this command :
 - `make build_docker_image`
-___Note___ : If your system can't execute the command `make`, do this instead :
+    ___Note___ : If your system can't execute the command `make`, do this instead :
     - `docker build -t barbuc-api .`
 `barbuc-api` is the name of the image
 
@@ -129,16 +130,16 @@ ___Note___ : If your system can't execute the command `make`, do this instead :
     - `docker run -d -p 5000:5000 --env-file .env --name barbuc-api --network barbuc-network barbuc-api`
 Here, we set the port to 5000 and use the env file to apply configuration
 
-To access to the container, just type :
-    - `localhost:5000`
-    or
-    - `YOUR_IP_ADDRESS:5000`
+To access to the container, just type `localhost:5000` or `YOUR_IP_ADDRESS:5000`
+___Note___ : Anyone who is connected to the same network as you can access the API
 
 ### Generate swagger
 To generate the swagger, just enter this command :
 - `make build_schemas`
 
 This will generate the swagger in JSON and YAML
+You can see the swagger on this website : https://editor.swagger.io/
+Just copy/paste the content of the swagger and you'll see the architecture of the API
 ___Note___ : If your system can't execute the command `make`, do this instead :
 - `export FLASK_APP=run; flask openapi write specs/barbuc-spec.json;`
 - `export FLASK_APP=run; flask openapi write specs/barbuc-spec.yaml;`
