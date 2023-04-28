@@ -53,3 +53,11 @@ tests:
 
 testsx:
 	pytest -x -vv --doctest-modules --ignore-glob=./barbuc_api/main.py --log-level=DEBUG ./barbuc_api ./tests
+
+
+build_docker_image:
+	docker build -t barbuc-api . 
+
+
+build_docker_container:
+	docker run -d -p 5000:5000 --env-file .env --name barbuc-api --network barbuc-network barbuc-api
