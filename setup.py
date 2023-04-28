@@ -25,7 +25,7 @@ required = [
     "ping3"
 ]
 
-VERSION = "2023.04.25"
+VERSION = "2023.04.0"
 
 setup(
       name='barbuc_api',

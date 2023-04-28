@@ -3,14 +3,12 @@ POST http://localhost:5001/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "victor.cyprien@limayrac.fr",
-    "password": "beedemo"
+    "email": "admin.admin@admin.fr",
+    "password": "123456Az!"
 }
 
 ###
-@TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4MjQyNDAxNCwianRpIjoiOTNiYTEyNTctMWMzZC00MDVhLTlmMzMtYTA4MjcwNWI4ZDc3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InZpY3Rvci5jeXByaWVuQGxpbWF5cmFjLmZyIiwibmJmIjoxNjgyNDI0MDE0LCJleHAiOjE2ODI0MzEyMTR9.UbveQQKzqqSnwEikCQiMl28XDaWNuZU_yqmX6FDhj70
-
-
+@TOKEN=token
 ###
 GET http://localhost:5001/api/users
 Authorization: Bearer {{TOKEN}}
@@ -22,10 +20,81 @@ Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
-    "email": "tristan.calvet@limayrac.fr",
-    "name": "Tristan CALVET",
+    "email": "test.test@test.fr",
+    "name": "Test",
     "password": "beedemo"
 }
+
+###
+PUT http://localhost:5001/api/users/943602075
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "email": "test2.test2@test2.fr"
+}
+
+
+###
+DELETE http://localhost:5001/api/users/943602075
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET http://localhost:5001/api/barbecues
+Authorization: Bearer {{TOKEN}}
+
+###
+
+POST http://localhost:5001/api/barbecues
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "name": "Test",
+    "place": "Toulouse",
+    "date": "2023-04-27 18:30:00"
+}
+
+
+###
+
+PUT http://localhost:5001/api/barbecues/362094319
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "name": "Test 2",
+    "place": "Toulouse 2",
+    "date": "2023-04-27 18:45:00"
+}
+
+
+###
+DELETE  http://localhost:5001/api/barbecues/362094319
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET http://localhost:5001/api/barbecues/362094319/available
+Authorization: Bearer {{TOKEN}}
+
+
+###
+POST http://localhost:5001/api/barbecues/362094319/reserve
+Authorization: Bearer {{TOKEN}}
+
+
+###
+POST http://localhost:5001/api/barbecues/362094319/cancel
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET http://localhost:5001/api/barbecues/availables
+Authorization: Bearer {{TOKEN}}
 
 
 ###
