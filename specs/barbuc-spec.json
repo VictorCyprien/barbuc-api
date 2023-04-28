@@ -703,10 +703,6 @@
       "Error": {
         "type": "object",
         "properties": {
-          "errors": {
-            "type": "object",
-            "description": "Errors"
-          },
           "status": {
             "type": "string",
             "description": "Error name"
@@ -714,6 +710,10 @@
           "code": {
             "type": "integer",
             "description": "Error code"
+          },
+          "errors": {
+            "type": "object",
+            "description": "Errors"
           },
           "message": {
             "type": "string",
@@ -943,16 +943,6 @@
       "Barbecue": {
         "type": "object",
         "properties": {
-          "barbecue_id": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 2147483647,
-            "description": "Unique barbecue identifier"
-          },
-          "place": {
-            "type": "string",
-            "description": "Place of the barbecue"
-          },
           "_date": {
             "type": "string",
             "description": "Date of the barbecue",
@@ -962,6 +952,10 @@
             "type": "string",
             "description": "Name of the barbecue"
           },
+          "place": {
+            "type": "string",
+            "description": "Place of the barbecue"
+          },
           "user": {
             "description": "User who reserved the barbecue",
             "allOf": [
@@ -969,6 +963,12 @@
                 "$ref": "#/components/schemas/User1"
               }
             ]
+          },
+          "barbecue_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "description": "Unique barbecue identifier"
           }
         },
         "required": [

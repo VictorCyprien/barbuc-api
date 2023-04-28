@@ -36,10 +36,10 @@ Barbuc-Api is a API REST which manage users and barbecues
     - `make install`
     
     ___Note___ : If your system can't execute the command `make`, do this instead :
-        - `pip install -r requirements.txt`
-        - `pip install -r requirements.dev.txt`
-        - `pip install -e ./`
-
+        - `pip install -r requirements.txt`<br>
+        - `pip install -r requirements.dev.txt`<br>
+        - `pip install -e ./`<br>
+        
 7. Setup Docker
     __Note__ : You need to install Docker to use this API
     Check this link to download Docker : https://www.docker.com/get-started/
@@ -98,7 +98,7 @@ This will inform you if the service are running normally
 
 ### Test the API
 To test the API, just type :
-- `make tests`
+- `make tests`<br>
 ___Note___ : If your system can't execute the command `make`, do this instead :
     - `pytest --cov=barbuc_api --cov-config=.coveragerc --cov-report=html:htmlcov --cov-report xml:cov.xml --cov-report=term \
 		-vv --doctest-modules --ignore-glob=./main.py --log-level=DEBUG --junitxml=report.xml ./ ./tests`
@@ -108,24 +108,24 @@ This will execute integration testing for every route and give total coverage fo
 
 ### Deploy the API on a Docker Container __(Optional)__
 First, you need to set some specific value for environnements variables :
-- _MONGODB_URI_ : To access to the MongoDB container you need to type : `mongodb://barbuc-db:27017`
-___Note___ : `barbuc-db` is the name of the containter
+- _MONGODB_URI_ : To access to the MongoDB container you need to type : `mongodb://barbuc-db:27017`<br>
+___Note___ : `barbuc-db` is the name of the containter<br>
 The port doesn't need to change, you can leave him at `27017`
 
-- _REDIS_URI_ : To access to the Redis container you need to type : `barbuc-redis`
-___Note___ : `barbuc-redis` is the name of the containter
+- _REDIS_URI_ : To access to the Redis container you need to type : `barbuc-redis`<br>
+___Note___ : `barbuc-redis` is the name of the containter<br>
 The port doesn't need to change, you can leave him at `6379`
 
 Then, build the docker image using this command :
-- `make build_docker_image`
+- `make build_docker_image`<br>
     ___Note___ : If your system can't execute the command `make`, do this instead :
-    - `docker build -t barbuc-api .`
+    - `docker build -t barbuc-api .`<br>
 `barbuc-api` is the name of the image
 
 __Warning__ : Be sure to set environnements variables like said as mentioned above before building the container !
 
 Finally, build the container using this command :
-- `make build_docker_container`
+- `make build_docker_container`<br>
 ___Note___ : If your system can't execute the command `make`, do this instead :
     - `docker run -d -p 5000:5000 --env-file .env --name barbuc-api --network barbuc-network barbuc-api`
 Here, we set the port to 5000 and use the env file to apply configuration
@@ -139,7 +139,7 @@ To generate the swagger, just enter this command :
 
 This will generate the swagger in JSON and YAML
 You can see the swagger on this website : https://editor.swagger.io/
-Just copy/paste the content of the swagger and you'll see the architecture of the API
+Just copy/paste the content of the swagger and you'll see the architecture of the API<br>
 ___Note___ : If your system can't execute the command `make`, do this instead :
 - `export FLASK_APP=run; flask openapi write specs/barbuc-spec.json;`
 - `export FLASK_APP=run; flask openapi write specs/barbuc-spec.yaml;`
