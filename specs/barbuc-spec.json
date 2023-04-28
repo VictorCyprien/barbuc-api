@@ -764,6 +764,13 @@
             "type": "string",
             "description": "Email of the user"
           },
+          "scopes": {
+            "type": "array",
+            "description": "Scopes of the user",
+            "items": {
+              "type": "string"
+            }
+          },
           "_last_login": {
             "type": "string",
             "nullable": true,
@@ -936,24 +943,24 @@
       "Barbecue": {
         "type": "object",
         "properties": {
-          "place": {
-            "type": "string",
-            "description": "Place of the barbecue"
-          },
-          "name": {
-            "type": "string",
-            "description": "Name of the barbecue"
-          },
           "barbecue_id": {
             "type": "integer",
             "minimum": 0,
             "maximum": 2147483647,
             "description": "Unique barbecue identifier"
           },
+          "place": {
+            "type": "string",
+            "description": "Place of the barbecue"
+          },
           "_date": {
             "type": "string",
             "description": "Date of the barbecue",
             "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the barbecue"
           },
           "user": {
             "description": "User who reserved the barbecue",
@@ -1082,7 +1089,7 @@
             "description": "User who canceled the reservation",
             "allOf": [
               {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/User1"
               }
             ]
           }
