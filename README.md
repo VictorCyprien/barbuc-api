@@ -65,7 +65,9 @@ Barbuc-Api is a API REST which manage users and barbecues
     - You are good to go !
 
 10. Setup environnements variable
-You need to setup some environnements variables in order to make the API to work :
+You need to setup some environnements variables in order to make the API to work<br>
+First, create a file `.env` at the root of the project<br>
+Then, set those variables :<br>
 
 - _MONGODB_URI_ : The URL of the MongoDB database (default is `mongodb://localhost:27017`)
 - _MONGODB_DATABASE_ : The name of the database (default is `barbuc-api`)
