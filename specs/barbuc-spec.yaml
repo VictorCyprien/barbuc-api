@@ -943,9 +943,9 @@
       "Barbecue": {
         "type": "object",
         "properties": {
-          "name": {
+          "place": {
             "type": "string",
-            "description": "Name of the barbecue"
+            "description": "Place of the barbecue"
           },
           "barbecue_id": {
             "type": "integer",
@@ -953,9 +953,9 @@
             "maximum": 2147483647,
             "description": "Unique barbecue identifier"
           },
-          "place": {
+          "name": {
             "type": "string",
-            "description": "Place of the barbecue"
+            "description": "Name of the barbecue"
           },
           "user": {
             "description": "User who reserved the barbecue",
