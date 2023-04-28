@@ -89,7 +89,11 @@ __IMPORTANT__ : You will need to update the login of the admin and create others
 To launch the API, use this command :
     - `make run`
 ___Note___ : If your system can't execute the command `make`, do this instead :
-    - `export FLASK_APP=run; export FLASK_ENV=development; flask run --host=0.0.0.0 --port=5000;`
+    - `export FLASK_APP=run; export FLASK_ENV=development; flask run --host=0.0.0.0 --port=5001;`
+
+### Check the health of MongoDB and Redis service
+You can check the health of MongoDB and Redis when accessing this route : `localhost:5001/healthcheck`
+This will inform you if the service are running normally
 
 ### Test the API
 To test the API, just type :
