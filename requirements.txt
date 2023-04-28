@@ -8,6 +8,7 @@ flask-compress
 flask_mongoengine
 flask-smorest
 flask-jwt-extended
+gunicorn
 marshmallow
 marshmallow_enum
 colorlog
