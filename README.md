@@ -40,11 +40,17 @@ Barbuc-Api is a API REST which manage users and barbecues
         - `pip install -r requirements.dev.txt`
         - `pip install -e ./`
 
-7. Setup Docker Network
-    First, you need to create a network :
+7. Setup Docker
+    __Note__ : You need to install Docker to use this API
+    Check this link to download Docker : https://www.docker.com/get-started/
+
+    To check if Docker is installed, open a terminal and type : `docker`
+    If you have a command list, congratulation you just install Docker !
+
+    Then, you need to create a network :
     - `docker network create barbuc-network`
 
-    Then, you can create containers for MongoDB and Redis
+    After this, you can create containers for MongoDB and Redis
 
 8. Setup MongoDB in Docker
     - Pull a mongo image `docker pull mongo`
@@ -61,13 +67,13 @@ Barbuc-Api is a API REST which manage users and barbecues
 10. Setup environnements variable
 You need to setup some environnements variables in order to make the API to work :
 
-- MONGODB_URI : The URL of the MongoDB database (default is `mongodb://localhost:27017`)
-- MONGODB_DATABASE : The name of the database (default is `barbuc-api`)
-- SECURITY_PASSWORD_SALT : The salt used to encrypt user password (string)
-- FLASK_JWT : The token used to generate access token (integer)
-- JWT_ACCESS_TOKEN_EXPIRES : The number of seconds before a token expire (integer)
-- REDIS_URI : The URL of Redis (default is `localhost`)
-- REDIS_PORT : The port used for Redis (default is `6379`)
+- _MONGODB_URI_ : The URL of the MongoDB database (default is `mongodb://localhost:27017`)
+- _MONGODB_DATABASE_ : The name of the database (default is `barbuc-api`)
+- _SECURITY_PASSWORD_SALT_ : The salt used to encrypt user password (string)
+- _FLASK_JWT_ : The token used to generate access token (integer)
+- _JWT_ACCESS_TOKEN_EXPIRES_ : The number of seconds before a token expire (integer)
+- _REDIS_URI_ : The URL of Redis (default is `localhost`)
+- _REDIS_PORT_ : The port used for Redis (default is `6379`)
 
 11. Create a superadmin user
 When MongoDB is up, you can create a superadmin using this command :
