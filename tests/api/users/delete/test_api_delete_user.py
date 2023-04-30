@@ -94,3 +94,24 @@ def test_delete_user_himself(client: Flask, victor: User):
             'user_id': ANY
         }
     }
+
+
+def test_delete_user_not_found(client: Flask, victor: User, tristan: User):
+    data_login = {
+        "email": victor.email,
+        "password": "beedemo"
+    }
+
+    res = client.post("/api/auth/login", json=data_login)
+    token = res.json["token"]
+    assert res.status_code == 201
+
+    res = client.delete("/api/users/123456789", headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 404
+    data = res.json
+    print(data)
+    assert data == {
+        'code': 404, 
+        'message': 'User #123456789 not found !', 
+        'status': 'Not Found'
+    }
