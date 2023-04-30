@@ -77,7 +77,10 @@ class OneUserView(AbstractUsersView):
         ):
             raise NotFound(f"User #{user_id} not found !")
 
-        user = User.get_by_id(id=user_id)
+        try:
+            user = User.get_by_id(id=user_id)
+        except DoesNotExist:
+            raise NotFound(f"User #{user_id} not found !")
         user.delete()
 
         return {
