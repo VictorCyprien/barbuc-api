@@ -82,6 +82,12 @@ class OneUserView(AbstractUsersView):
         except DoesNotExist:
             raise NotFound(f"User #{user_id} not found !")
         user.delete()
+        
+        # We logout the user when he deleted himself
+        if user.user_id == auth_user.user_id:
+            from ..auth.logout_auth_view import LogoutAuthView
+            logout = LogoutAuthView()
+            logout.post()
 
         return {
             "action": "deleted",
