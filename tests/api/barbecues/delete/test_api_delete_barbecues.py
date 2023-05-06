@@ -58,3 +58,25 @@ def test_delete_barbecue_not_admin(client: Flask, member: User, toulouse: Barbec
         'message': f'Barbecue #{toulouse.barbecue_id} not found !', 
         'status': 'Not Found'
     }
+
+
+def test_delete_barbecue_not_found(client: Flask, victor: User):
+    data_login = {
+        "email": victor.email,
+        "password": "beedemo"
+    }
+
+    res = client.post("/api/auth/login", json=data_login)
+    token = res.json["token"]
+    assert res.status_code == 201
+
+    res = client.delete("/api/barbecues/123", headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 404
+    data = res.json
+    print(data)
+    assert data == {
+        'code': 404, 
+        'message': 'Barbecue #123 not found !', 
+        'status': 'Not Found'
+    }
+

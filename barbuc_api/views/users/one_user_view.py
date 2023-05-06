@@ -2,7 +2,7 @@ from typing import Dict
 import logging
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from mongoengine.errors import NotUniqueError
+from mongoengine.errors import NotUniqueError, DoesNotExist
 
 from .users_blp import users_blp
 from .abstract_user_view import AbstractUsersView
@@ -43,7 +43,11 @@ class OneUserView(AbstractUsersView):
         if input_dict.get("email", None) is not None and not User.isValidEmail(input_dict["email"]):
             raise BadRequest(ReasonError.INVALID_EMAIL.value)
 
-        user = User.get_by_id(id=user_id)
+        try:
+            user = User.get_by_id(id=user_id)
+        except DoesNotExist:
+            raise NotFound(f"User #{user_id} not found !")
+
         user.update(input_dict)
         
         try:
@@ -73,8 +77,17 @@ class OneUserView(AbstractUsersView):
         ):
             raise NotFound(f"User #{user_id} not found !")
 
-        user = User.get_by_id(id=user_id)
+        try:
+            user = User.get_by_id(id=user_id)
+        except DoesNotExist:
+            raise NotFound(f"User #{user_id} not found !")
         user.delete()
+        
+        # We logout the user when he deleted himself
+        if user.user_id == auth_user.user_id:
+            from ..auth.logout_auth_view import LogoutAuthView
+            logout = LogoutAuthView()
+            logout.post()
 
         return {
             "action": "deleted",

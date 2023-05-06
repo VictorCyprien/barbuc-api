@@ -127,3 +127,30 @@ def test_user_update_email_invalid_email(client: Flask, victor: User, tristan: U
         'message': 'This email is invalid', 
         'status': 'Bad Request'
     }
+
+
+def test_user_update_not_found(client: Flask, victor: User):
+    data_login = {
+        "email": victor.email,
+        "password": "beedemo"
+    }
+
+    res = client.post("/api/auth/login", json=data_login)
+    token = res.json["token"]
+    assert res.status_code == 201
+
+    data_put = {
+        "email": "vic.vic@vic.fr",
+        "name": "Vic",
+        "password": "vic123456"
+    }
+
+    res = client.put("/api/users/86489686484864", json=data_put, headers={'Authorization': f'Bearer {token}'})
+    assert res.status_code == 404
+    data = res.json
+    print(data)
+    assert data == {
+        'code': 404,
+        'message': 'User #86489686484864 not found !',
+        'status': 'Not Found'
+    }
