@@ -1,3 +1,8 @@
+### v2023.05.r0 (2023.05.0)
+- Robustify handle of errors when `User` or `Barbecue` doesn't exist
+- Improve user delete
+    - Now logout automatically the user when he delete himself
+
 ### v2023.04.r2 (2023.04.2)
 - Fix README
 - Fix setup version
