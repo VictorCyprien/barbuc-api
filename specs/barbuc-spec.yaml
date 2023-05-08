@@ -703,6 +703,10 @@
       "Error": {
         "type": "object",
         "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
           "status": {
             "type": "string",
             "description": "Error name"
@@ -710,10 +714,6 @@
           "errors": {
             "type": "object",
             "description": "Errors"
-          },
-          "code": {
-            "type": "integer",
-            "description": "Error code"
           },
           "message": {
             "type": "string",
