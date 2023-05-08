@@ -1,4 +1,5 @@
 
+from typing import Iterator
 from flask import Flask
 from flask import testing
 from flask.testing import FlaskClient
@@ -16,7 +17,7 @@ from barbuc_api.models.barbecue import Barbecue
 
 
 @pytest.fixture(scope='session')
-def app(request) -> Flask:
+def app(request) -> Iterator[Flask]:
     """ Session-wide test `Flask` application. """
     disconnect()    # force close potential existing mongo connection
     from barbuc_api.config import config
@@ -47,7 +48,7 @@ class TestClient(testing.FlaskClient):
 
 
 @pytest.fixture(scope='module')
-def client(app: Flask) -> TestClient:
+def client(app: Flask) -> Iterator[TestClient]:
     app.test_client_class = TestClient
     client = app.test_client()
     yield client
@@ -58,34 +59,36 @@ def _raz_auth_headers(client: TestClient):
 
 
 @pytest.fixture(scope='function')
-def client_victor(client: TestClient, victor: User) -> FlaskClient:
+def client_victor(client: TestClient, victor: User) -> Iterator[FlaskClient]:
     yield client
     _raz_auth_headers(client)
 
 
 @pytest.fixture(scope='function')
-def client_tristan(client: TestClient, tristan: User) -> FlaskClient:
+def client_tristan(client: TestClient, tristan: User) -> Iterator[FlaskClient]:
     yield client
     _raz_auth_headers(client)
 
 
 @pytest.fixture(scope='function')
-def client_member(client: TestClient, member: User) -> FlaskClient:
+def client_member(client: TestClient, member: User) -> Iterator[FlaskClient]:
     yield client
     _raz_auth_headers(client)
 
 
 #### USERS ####
 
+creation_date = '2000-01-01T00:00:00+00:00'
+
 @pytest.fixture(scope='function')
-def victor(app) -> User:
+def victor(app) -> Iterator[User]:
     #  victor is "superadmin"
     user_dict = {
         "email": "victor.cyprien@barbuc.fr",
         "name": "Victor CYPRIEN",
         "password": "beedemo"
     }
-    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+    with freezegun.freeze_time(creation_date):
         user = User.create(user_dict)
         user.scopes = ["user:admin"]
         user.save()
@@ -94,14 +97,14 @@ def victor(app) -> User:
 
 
 @pytest.fixture(scope='function')
-def tristan(app) -> User:
+def tristan(app) -> Iterator[User]:
     #  tristan is "superadmin"
     user_dict = {
         "email": "tristan.calvet@barbuc.fr",
         "name": "Tristan CALVET",
         "password": "beedemo"
     }
-    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+    with freezegun.freeze_time(creation_date):
         user = User.create(user_dict)
         user.scopes = ["user:admin"]
         user.save()
@@ -110,14 +113,14 @@ def tristan(app) -> User:
 
 
 @pytest.fixture(scope='function')
-def member(app) -> User:
+def member(app) -> Iterator[User]:
     #  member is not "superadmin"
     user_dict = {
         "email": "member1@barbuc.fr",
         "name": "Member 1",
         "password": "beedemo"
     }
-    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+    with freezegun.freeze_time(creation_date):
         user = User.create(user_dict)
         user.save()
     yield user
@@ -126,14 +129,16 @@ def member(app) -> User:
 
 #### BARBECUES ####
 
+date_place = "2023-04-27 18:30:00"
+
 @pytest.fixture(scope='function')
-def toulouse(app) -> Barbecue:
+def toulouse(app) -> Iterator[Barbecue]:
     barbuc_dict = {
         "name": "Mon Barbuc à Toulouse",
         "place": "Toulouse",
-        "date": "2023-04-27 18:30:00"
+        "date": date_place
     }
-    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+    with freezegun.freeze_time(creation_date):
         barbecue = Barbecue.create(barbuc_dict)
         barbecue.save()
     yield barbecue
@@ -141,26 +146,26 @@ def toulouse(app) -> Barbecue:
 
 
 @pytest.fixture(scope='function')
-def paris(app) -> Barbecue:
+def paris(app) -> Iterator[Barbecue]:
     barbuc_dict = {
         "name": "Mon Barbuc à Paris",
         "place": "Paris",
-        "date": "2023-04-27 18:30:00"
+        "date": date_place
     }
-    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+    with freezegun.freeze_time(creation_date):
         barbecue = Barbecue.create(barbuc_dict)
         barbecue.save()
     yield barbecue
     barbecue.delete()
 
 @pytest.fixture(scope='function')
-def dijon(app, victor) -> Barbecue:
+def dijon(app, victor) -> Iterator[Barbecue]:
     barbuc_dict = {
         "name": "Mon Barbuc à Dijon",
         "place": "Dijon",
-        "date": "2023-04-27 18:30:00"
+        "date": date_place
     }
-    with freezegun.freeze_time('2000-01-01T00:00:00+00:00'):
+    with freezegun.freeze_time(creation_date):
         barbecue = Barbecue.create(barbuc_dict)
         barbecue.user = victor
         barbecue.save()
