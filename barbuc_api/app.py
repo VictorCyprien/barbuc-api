@@ -91,11 +91,7 @@ def create_flask_app(config: Config) -> Flask:
     def my_missing_token_callback(jwt_header, jwt_payload):
         return jsonify(code=401, message="Not Authenticated", status="Unauthorized"), 401
     
-
     app.extensions['jwt_redis_blocklist'] = jwt_redis_blocklist
-
-    # csrf = CSRFProtect()
-    # csrf.init_app(app)
 
     CORS(app, resources={r"/foo": {"origins": "https://localhost:port"}})
     Compress(app)
