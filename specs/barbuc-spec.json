@@ -703,21 +703,21 @@
       "Error": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "description": "Error name"
-          },
           "code": {
             "type": "integer",
             "description": "Error code"
           },
-          "errors": {
-            "type": "object",
-            "description": "Errors"
-          },
           "message": {
             "type": "string",
             "description": "Error message"
+          },
+          "status": {
+            "type": "string",
+            "description": "Error name"
+          },
+          "errors": {
+            "type": "object",
+            "description": "Errors"
           }
         }
       },
@@ -943,10 +943,11 @@
       "Barbecue": {
         "type": "object",
         "properties": {
-          "_date": {
-            "type": "string",
-            "description": "Date of the barbecue",
-            "format": "date-time"
+          "barbecue_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "description": "Unique barbecue identifier"
           },
           "name": {
             "type": "string",
@@ -956,6 +957,11 @@
             "type": "string",
             "description": "Place of the barbecue"
           },
+          "_date": {
+            "type": "string",
+            "description": "Date of the barbecue",
+            "format": "date-time"
+          },
           "user": {
             "description": "User who reserved the barbecue",
             "allOf": [
@@ -963,19 +969,14 @@
                 "$ref": "#/components/schemas/User1"
               }
             ]
-          },
-          "barbecue_id": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 2147483647,
-            "description": "Unique barbecue identifier"
           }
         },
         "required": [
           "_date",
           "name",
           "place"
-        ]
+        ],
+        "description": "Barbecue informations."
       },
       "GetBarbecuesList": {
         "type": "object",
