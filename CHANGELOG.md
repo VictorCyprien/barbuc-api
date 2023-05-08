@@ -1,3 +1,7 @@
+### v2023.05.r1 (2023.05.1)
+- Fix SonarQube warning (conftest)
+- Add Meta class for ordered `Barbecue` schema
+
 ### v2023.05.r0 (2023.05.0)
 - Robustify handle of errors when `User` or `Barbecue` doesn't exist
 - Improve user delete
