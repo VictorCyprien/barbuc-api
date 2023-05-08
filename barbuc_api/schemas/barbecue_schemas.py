@@ -36,6 +36,10 @@ class BarbecueSchema(Schema):
             if value.metadata.get('exclude_if_empty') and hasattr(in_data.get(key) , '__len__') and len(in_data.get(key)) == 0:
                 del in_data[key]
         return in_data
+    
+    class Meta:
+        ordered = True
+        description = "Barbecue informations."
 
 
 
